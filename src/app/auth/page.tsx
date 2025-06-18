@@ -12,18 +12,18 @@ import {
   createUserWithEmailAndPassword, 
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
-  FirebaseError
+  type FirebaseError
 } from 'firebase/auth';
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { LoginSchema, SignUpSchema, PasswordResetSchema, type LoginFormData, type SignUpFormData, type PasswordResetFormData } from '@/types';
-import { Zap, LogIn, UserPlus, Mail, KeyRound, Loader2 } from 'lucide-react';
+import { Zap, LogIn, UserPlus, Mail, KeyRound, Loader2, ShieldAlert } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 
@@ -66,8 +66,8 @@ export default function AuthPage() {
     try {
       await createUserWithEmailAndPassword(auth, data.email, data.password);
       toast({ title: "Sign Up Successful", description: "Welcome! Please login." });
-      setActiveTab("login"); // Switch to login tab after successful sign up
-      loginForm.reset({ email: data.email, password: "" }); // Pre-fill email
+      setActiveTab("login"); 
+      loginForm.reset({ email: data.email, password: "" }); 
       signUpForm.reset();
     } catch (error) {
       const firebaseError = error as FirebaseError;
@@ -112,7 +112,7 @@ export default function AuthPage() {
         </Link>
       </div>
 
-      <Card className="w-full max-w-md shadow-2xl rounded-xl overflow-hidden">
+      <Card className="w-full max-w-md shadow-2xl rounded-xl overflow-hidden relative">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-2 bg-muted p-1 rounded-none border-b">
             <TabsTrigger value="login" className="py-3 text-sm font-medium data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-md rounded-t-md">
@@ -274,9 +274,18 @@ export default function AuthPage() {
             </CardContent>
           </TabsContent>
         </Tabs>
-        <CardContent className="text-center text-xs text-muted-foreground pt-2 pb-6 border-t mt-4">
-          By continuing, you agree to Promptly's <Link href="/terms" className="underline hover:text-primary">Terms of Service</Link> and <Link href="/privacy" className="underline hover:text-primary">Privacy Policy</Link>.
-        </CardContent>
+        
+        <CardFooter className="flex flex-col items-center text-center text-xs text-muted-foreground pt-2 pb-6 border-t mt-4">
+          <div>
+            By continuing, you agree to Promptly's <Link href="/terms" className="underline hover:text-primary">Terms of Service</Link> and <Link href="/privacy" className="underline hover:text-primary">Privacy Policy</Link>.
+          </div>
+          <div className="absolute bottom-2 right-2 opacity-50 hover:opacity-100 transition-opacity">
+            <Link href="/workspace" className="text-xs text-muted-foreground hover:text-primary flex items-center">
+              <ShieldAlert className="h-3 w-3 mr-1" />
+              Admin
+            </Link>
+          </div>
+        </CardFooter>
       </Card>
 
       <footer className="py-8 text-center text-muted-foreground text-sm absolute bottom-0">
@@ -285,3 +294,5 @@ export default function AuthPage() {
     </div>
   );
 }
+
+    

@@ -11,14 +11,15 @@ export interface Prompt {
   tools: string[];
   isFeatured: boolean;
   description?: string;
+  author?: string; // Optional author field
 }
 
 export interface Category {
   id: string;
   name: string;
   description: string;
-  iconEmoji: string;
-  Icon?: LucideIcon;
+  iconEmoji: string; // Kept for reference if raw data uses it
+  Icon?: LucideIcon; // For UI rendering
 }
 
 export interface PromptCollection {
@@ -85,7 +86,7 @@ export const PaymentFormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
   cardNumber: z.string()
     .min(16, { message: "Card number must be 16 digits." })
-    .max(19, { message: "Card number must be 16-19 digits." }) // Allowing for spaces
+    .max(19, { message: "Card number must be 16-19 digits." }) 
     .regex(/^\d{4} ?\d{4} ?\d{4} ?\d{4}$/, { message: "Invalid card number format." }),
   expiryDate: z.string()
     .min(5, { message: "Expiry date must be MM/YY."})
@@ -110,7 +111,7 @@ export const SignUpSchema = z.object({
   confirmPassword: z.string().min(6, { message: "Password must be at least 6 characters." }),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords do not match.",
-  path: ["confirmPassword"], // Path to the field where the error message will be shown
+  path: ["confirmPassword"], 
 });
 export type SignUpFormData = z.infer<typeof SignUpSchema>;
 
@@ -118,3 +119,17 @@ export const PasswordResetSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
 });
 export type PasswordResetFormData = z.infer<typeof PasswordResetSchema>;
+
+// Workspace Schemas
+export const PromptFormSchema = z.object({
+  id: z.string().optional(), // Optional for new prompts
+  title: z.string().min(3, { message: "Title must be at least 3 characters." }),
+  prompt: z.string().min(10, { message: "Prompt content must be at least 10 characters." }),
+  category: z.string().min(1, { message: "Category is required." }),
+  tools: z.array(z.string()).optional().default([]), // Default to empty array
+  isFeatured: z.boolean().optional().default(false), // Default to false
+  author: z.string().optional(),
+});
+export type PromptFormData = z.infer<typeof PromptFormSchema>;
+
+    
