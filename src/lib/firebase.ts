@@ -1,7 +1,7 @@
 
-import { initializeApp, getApps, getApp, type FirebaseOptions } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { initializeApp, getApps, getApp, type FirebaseApp, type FirebaseOptions } from "firebase/app";
+import { getFirestore, type Firestore } from "firebase/firestore";
+import { getAuth, type Auth } from "firebase/auth";
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -12,35 +12,53 @@ const firebaseConfig: FirebaseOptions = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
-// Check for essential Firebase config variables
+let app: FirebaseApp | undefined;
+let db: Firestore | null = null;
+let auth: Auth | null = null;
+
+const essentialKeysValid = firebaseConfig.apiKey && firebaseConfig.projectId;
+
 if (!firebaseConfig.apiKey) {
-  console.error("Firebase Error: NEXT_PUBLIC_FIREBASE_API_KEY is missing. Please check your .env.local file.");
+  console.error("CRITICAL Firebase Config Error: NEXT_PUBLIC_FIREBASE_API_KEY is missing or empty. Please check your .env.local file. Firebase services will likely fail.");
 }
 if (!firebaseConfig.projectId) {
-  console.error("Firebase Error: NEXT_PUBLIC_FIREBASE_PROJECT_ID is missing. Please check your .env.local file.");
+  console.error("CRITICAL Firebase Config Error: NEXT_PUBLIC_FIREBASE_PROJECT_ID is missing or empty. Please check your .env.local file. Firebase services will likely fail.");
 }
 
-// Initialize Firebase
-let app;
 if (!getApps().length) {
-  if (firebaseConfig.apiKey && firebaseConfig.projectId) { // Only initialize if essential keys are present
-    app = initializeApp(firebaseConfig);
+  if (essentialKeysValid) {
+    try {
+      app = initializeApp(firebaseConfig);
+    } catch (error) {
+      console.error("Firebase Error: Failed to initialize app during initial setup. This can be due to invalid config values (even if present).", error);
+      app = undefined; 
+    }
   } else {
-    console.error("Firebase initialization skipped due to missing API Key or Project ID.");
-    // You might want to throw an error here or handle this case appropriately for your app
+    console.warn("Firebase Warning: Core Firebase initialization skipped during initial setup due to missing API Key or Project ID. Firebase services will be unavailable.");
+    app = undefined; 
   }
 } else {
-  app = getApp();
+  try {
+    app = getApp();
+  } catch (error) {
+    console.error("Firebase Error: Failed to get existing app instance. This could mean the initial setup failed silently or the app was unmounted.", error);
+    app = undefined;
+  }
 }
 
-// Conditionally initialize Firestore and Auth if app was initialized
-const db = app ? getFirestore(app) : null;
-const auth = app ? getAuth(app) : null;
-
-if (!app) {
-  console.warn("Firebase app was not initialized. Firestore and Auth services will not be available.")
+if (app) {
+  try {
+    db = getFirestore(app);
+    auth = getAuth(app); // This is where an (auth/invalid-api-key) error would surface if `app` initialized but with a bad key.
+  } catch (error) {
+    console.error("Firebase Error: Failed to initialize Firestore/Auth services with the app instance. This often points to an invalid API key, incorrect project permissions, or services not enabled in Firebase console.", error);
+    db = null;
+    auth = null;
+    // Consider if app should be set to undefined here if core services fail,
+    // but typically Firebase allows app init and fails at service level.
+  }
+} else {
+  console.warn("Firebase Warning: Firebase app object is not available or failed to initialize. Firestore and Auth services will be offline. Ensure .env.local is correctly configured and Firebase project is set up.");
 }
-
 
 export { db, auth, app };
-
