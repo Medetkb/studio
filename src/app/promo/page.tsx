@@ -78,7 +78,7 @@ export default function PromoPage() {
               Supercharge your AI interactions with Promptly. Access a vast library of curated prompts for ChatGPT, Claude, Grok, DeepSeek, and more. Save time, boost creativity, and achieve better results.
             </p>
             <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-3 shadow-lg transition-transform hover:scale-105 animate-fadeIn opacity-0" style={{animationDelay: '200ms'}} asChild>
-              <Link href="/auth">Get Started for Free</Link>
+              <Link href="/">Get Started for Free</Link>
             </Button>
           </Container>
         </section>
