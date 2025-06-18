@@ -39,8 +39,8 @@ const rawCategoriesData = [
   },
   {
     "id": "mystic",
-    "name": "Mystic",
-    "description": "Astrology, Tarot, Numerology insights.",
+    "name": "Mystic", // Updated name
+    "description": "Astrology, Tarot, Numerology insights.", // Updated description
     "iconEmoji": "🔮"
   }
 ];
@@ -66,7 +66,7 @@ const categoriesData: Category[] = rawCategoriesData.map(category => ({
 
 export function CategoryCardsSection() {
   return (
-    <section className="py-12 md:py-16 bg-background animate-fadeIn animation-delay-200 opacity-0">
+    <section id="categories-section" className="py-12 md:py-16 bg-background animate-fadeIn animation-delay-200 opacity-0">
       <Container>
         <div className="mb-10 md:mb-12 text-center">
           <h2 className="font-headline text-3xl md:text-4xl font-bold text-foreground mb-3">

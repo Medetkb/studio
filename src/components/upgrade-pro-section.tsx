@@ -7,7 +7,7 @@ import { Container } from "./container";
 
 export function UpgradeProSection() {
   return (
-    <section className="py-12 md:py-16 animate-fadeIn animation-delay-200 opacity-0">
+    <section id="upgrade-pro-section" className="py-12 md:py-16 animate-fadeIn animation-delay-200 opacity-0">
       <Container>
         <Card className="bg-gradient-to-br from-primary/90 to-primary shadow-xl overflow-hidden">
           <CardContent className="p-6 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 text-primary-foreground dark:text-white">

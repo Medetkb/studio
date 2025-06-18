@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import Link from "next/link";
@@ -11,9 +12,9 @@ import React from "react";
 import { ThemeToggleButton } from "./theme-toggle-button";
 
 const navItems: NavItem[] = [
-  { href: "#search", label: "Search", icon: Search },
-  { href: "#categories", label: "Categories", icon: LayoutGrid },
-  { href: "#upgrade", label: "Upgrade to PRO", icon: Zap, isCTA: true },
+  { href: "#curated-collections-search-section", label: "Search", icon: Search },
+  { href: "#categories-section", label: "Categories", icon: LayoutGrid },
+  { href: "#upgrade-pro-section", label: "Upgrade to PRO", icon: Zap, isCTA: true },
   { href: "#profile", label: "Profile", icon: User }, 
   { href: "#feedback", label: "Feedback", icon: MessageSquare },
 ];

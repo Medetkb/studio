@@ -78,7 +78,7 @@ export function CuratedCollectionsSection() {
             Explore expertly crafted prompts organized by category. Search by keyword to find what you need.
           </p>
         </div>
-        <div className="mb-10 md:mb-12">
+        <div id="curated-collections-search-section" className="mb-10 md:mb-12">
           <SearchInput 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
