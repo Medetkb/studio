@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Container } from "./container";
@@ -7,48 +6,47 @@ import type { Category } from "@/types";
 import { Briefcase, Palette, TrendingUp, ListChecks, Brain, Sparkles, Megaphone } from "lucide-react";
 
 // In a real app, this data would be fetched from Firestore.
-// For now, using the provided JSON data directly.
 const rawCategoriesData = [
   {
     "id": "marketing",
     "name": "Marketing & Sales",
-    "description": "Target audience analysis, funnel creation, keyword research, sales strategy prompts.",
-    "iconEmoji": "💼"
+    "description": "Target audience analysis, funnel building, conversion optimization.",
+    "iconEmoji": "💼" 
   },
   {
     "id": "content",
     "name": "Content & Creativity",
-    "description": "Generate content ideas, scripts, outlines, and formats for social media, blogs, and YouTube.",
+    "description": "Content ideas, scripts, outlines, formats.",
     "iconEmoji": "✍️"
   },
   {
     "id": "business",
     "name": "Business & Growth",
-    "description": "Prompts for planning, systemization, automation, finance, and team management.",
+    "description": "Planning, automation, systems, team management.",
     "iconEmoji": "📊"
   },
   {
     "id": "daily",
     "name": "Daily Productivity",
-    "description": "Prompts to organize your day, build habits, manage tasks, and boost focus.",
+    "description": "Daily routines, task management, focus prompts.",
     "iconEmoji": "📆"
   },
   {
     "id": "psychology",
     "name": "Psychology & Self-help",
-    "description": "Prompts for self-reflection, emotional intelligence, inner work, and mindset.",
+    "description": "Self-reflection, mindset, emotional support.",
     "iconEmoji": "🧠"
   },
   {
     "id": "mystic",
-    "name": "Astrology, Tarot & Numerology",
-    "description": "Mystic-themed prompts for daily readings, birth charts, and spiritual guidance.",
+    "name": "Mystic",
+    "description": "Astrology, Tarot, Numerology insights.",
     "iconEmoji": "🔮"
   }
 ];
 
 // Helper function to map emoji or ID to Lucide Icon
-const getIconForCategory = (categoryId: string, iconEmoji: string) => {
+const getIconForCategory = (categoryId: string) => {
   switch (categoryId) {
     case "marketing": return Briefcase;
     case "content": return Palette; 
@@ -62,7 +60,7 @@ const getIconForCategory = (categoryId: string, iconEmoji: string) => {
 
 const categoriesData: Category[] = rawCategoriesData.map(category => ({
   ...category,
-  Icon: getIconForCategory(category.id, category.iconEmoji),
+  Icon: getIconForCategory(category.id),
 }));
 
 

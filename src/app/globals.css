@@ -8,7 +8,7 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 95%; /* Light Gray #F2F2F2 (PRD) */
+    --background: 0 0% 95%; /* Light Gray #F2F2F2 (PRD) -> Updated to #f9f9f9 -> 0 0% 97.6% */
     --foreground: 0 0% 10%; /* Dark Gray #1A1A1A (PRD) */
 
     --card: 0 0% 100%; /* White (PRD) */
@@ -17,7 +17,7 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
 
-    --primary: 28 100% 45%; /* Saturated Orange #E67700 (PRD) */
+    --primary: 28 100% 45%; /* Saturated Orange #E67700 (PRD) -- User request: #FF6B00 -> 26 100% 50% */
     --primary-foreground: 0 0% 100%; /* White for on-primary */
 
     --secondary: 0 0% 90%; /* Slightly darker gray for secondary elements */
@@ -54,33 +54,33 @@ body {
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 7%; /* Dark background #121212 */
+    --foreground: 0 0% 94%; /* Light text #F0F0F0 */
 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 12%; /* Cards dark gray #1E1E1E */
+    --card-foreground: 0 0% 94%; /* Light text on dark cards */
 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 94%;
 
-    --primary: 28 100% 45%; /* Saturated Orange #E67700 (PRD) for dark mode */
-    --primary-foreground: 0 0% 100%; /* White for on-primary in dark mode */
+    --primary: 26 100% 50%; /* Saturated Orange #FF6B00 (User request) */
+    --primary-foreground: 0 0% 10%; /* Dark gray text on orange for contrast in dark mode if needed, or keep white if still legible */
 
-    --secondary: 240 4% 15%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 15%; /* Darker gray for secondary elements */
+    --secondary-foreground: 0 0% 94%;
 
-    --muted: 240 4% 15%;
+    --muted: 0 0% 15%;
     --muted-foreground: 0 0% 60%;
 
-    --accent: 217 89% 55%; /* Blue for dark mode */
-    --accent-foreground: 0 0% 98%;
+    --accent: 217 89% 55%; /* Blue for dark mode (existing) */
+    --accent-foreground: 0 0% 98%; /* White for on-accent */
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 4% 15%;
-    --input: 240 4% 15%;
-    --ring: 28 100% 45%; /* Primary color for rings (matches new primary) */
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 26 100% 50%; /* Primary orange for rings */
     
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -88,14 +88,14 @@ body {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 0 0% 7%;
+    --sidebar-foreground: 0 0% 94%;
+    --sidebar-primary: 26 100% 50%; 
+    --sidebar-primary-foreground: 0 0% 10%; 
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 94%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 26 100% 50%;
   }
 }
 
@@ -104,7 +104,11 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300 ease-in-out;
+  }
+  /* Ensure smooth transition for other elements that change colors with theme */
+  .bg-card, .bg-popover, .bg-primary, .bg-secondary, .bg-muted, .bg-accent, .border-border, .text-card-foreground, .text-popover-foreground, .text-primary-foreground, .text-secondary-foreground, .text-muted-foreground, .text-accent-foreground {
+    @apply transition-colors duration-300 ease-in-out;
   }
 }
 
@@ -126,4 +130,86 @@ body {
 /* Ensure content is invisible until animation starts for delayed items */
 .animate-fadeIn.opacity-0 {
   opacity: 0;
+}
+
+/* Override root colors for the current PRD */
+:root {
+  --background: 0 0% 94.9%; /* Light Gray #F2F2F2 */
+  --primary: 28 100% 45%; /* Saturated Orange #E67700 */
+  --accent: 217 89% 61%; /* Blue #4285F4 */
+}
+
+.dark {
+  --primary: 28 100% 45%; /* Saturated Orange #E67700 for dark mode too */
+  --primary-foreground: 0 0% 100%; /* White on orange for dark mode */
+  --accent: 217 89% 55%; /* Blue for dark mode */
+}
+
+/* User request overrides for dark theme */
+.dark {
+  --background: 0 0% 7%; /* #121212 */
+  --foreground: 0 0% 94.1%; /* #F0F0F0 */
+  --card: 0 0% 11.8%; /* #1E1E1E */
+  --card-foreground: 0 0% 94.1%; /* #F0F0F0 */
+  --popover: 0 0% 11.8%; /* #1E1E1E */
+  --popover-foreground: 0 0% 94.1%; /* #F0F0F0 */
+  --primary: 26 100% 50%; /* Orange #FF6B00 */
+  --primary-foreground: 0 0% 10%; /* Dark Gray #1A1A1A for text on orange button in dark mode */
+  /* Keep accent blue for now unless specified otherwise for dark mode, will use existing dark blue */
+}
+
+/* User request override for light theme primary (orange) and background */
+:root {
+  --background: 0 0% 97.6%; /* Light Gray #f9f9f9 */
+  --foreground: 0 0% 10%; /* Dark Gray #1A1A1A */
+  --card: 0 0% 100%; /* pure white */
+  --primary: 26 100% 50%; /* Orange #FF6B00 */
+  --primary-foreground: 0 0% 100%; /* white text on orange button */
+  --accent: 217 89% 61%; /* Blue #4285F4 - Keep this from original PRD if not overridden by orange only */
+}
+
+/* Reconcile: Final theme vars */
+:root {
+  --background: 0 0% 97.6%; /* #f9f9f9 */
+  --foreground: 0 0% 10%;   /* #1A1A1A */
+  --card: 0 0% 100%;       /* white */
+  --card-foreground: 0 0% 10%; /* #1A1A1A */
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 10%;
+  --primary: 26 100% 50%; /* #FF6B00 */
+  --primary-foreground: 0 0% 10%; /* #1A1A1A - for buttons with orange background and dark text */
+  --secondary: 0 0% 90%;
+  --secondary-foreground: 0 0% 10%;
+  --muted: 0 0% 85%;
+  --muted-foreground: 0 0% 40%;
+  --accent: 217 89% 61%; /* Blue for other accents if needed */
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 87%;
+  --input: 0 0% 92%;
+  --ring: 26 100% 50%; /* Orange #FF6B00 */
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 0 0% 7%;    /* #121212 */
+  --foreground: 0 0% 94.1%; /* #F0F0F0 */
+  --card: 0 0% 11.8%;     /* #1E1E1E */
+  --card-foreground: 0 0% 94.1%; /* #F0F0F0 */
+  --popover: 0 0% 11.8%;
+  --popover-foreground: 0 0% 94.1%;
+  --primary: 26 100% 50%; /* #FF6B00 */
+  --primary-foreground: 0 0% 10%; /* #1A1A1A - for buttons with orange background and dark text */
+  --secondary: 0 0% 15%;
+  --secondary-foreground: 0 0% 94.1%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 60%;
+  --accent: 217 89% 55%; /* Darker Blue */
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 15%;
+  --input: 0 0% 15%;
+  --ring: 26 100% 50%; /* Orange #FF6B00 */
 }

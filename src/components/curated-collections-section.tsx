@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useMemo } from 'react';
@@ -9,17 +8,15 @@ import type { Prompt, Category as AppCategory, PromptCollection } from "@/types"
 import { Briefcase, Palette, TrendingUp, ListChecks, Brain, Sparkles, Megaphone } from "lucide-react";
 
 // In a real app, this data would be fetched from Firestore.
-// Using user-provided data for categories
 const rawCategoriesData: AppCategory[] = [
-  { "id": "marketing", "name": "Marketing & Sales", "description": "Target audience analysis, funnel creation, keyword research, sales strategy prompts.", "iconEmoji": "💼" },
-  { "id": "content", "name": "Content & Creativity", "description": "Generate content ideas, scripts, outlines, and formats for social media, blogs, and YouTube.", "iconEmoji": "✍️" },
-  { "id": "business", "name": "Business & Growth", "description": "Prompts for planning, systemization, automation, finance, and team management.", "iconEmoji": "📊" },
-  { "id": "daily", "name": "Daily Productivity", "description": "Prompts to organize your day, build habits, manage tasks, and boost focus.", "iconEmoji": "📆" },
-  { "id": "psychology", "name": "Psychology & Self-help", "description": "Prompts for self-reflection, emotional intelligence, inner work, and mindset.", "iconEmoji": "🧠" },
-  { "id": "mystic", "name": "Astrology, Tarot & Numerology", "description": "Mystic-themed prompts for daily readings, birth charts, and spiritual guidance.", "iconEmoji": "🔮" }
+  { "id": "marketing", "name": "Marketing & Sales", "description": "Target audience analysis, funnel building, conversion optimization.", "iconEmoji": "💼" },
+  { "id": "content", "name": "Content & Creativity", "description": "Content ideas, scripts, outlines, formats.", "iconEmoji": "✍️" },
+  { "id": "business", "name": "Business & Growth", "description": "Planning, automation, systems, team management.", "iconEmoji": "📊" },
+  { "id": "daily", "name": "Daily Productivity", "description": "Daily routines, task management, focus prompts.", "iconEmoji": "📆" },
+  { "id": "psychology", "name": "Psychology & Self-help", "description": "Self-reflection, mindset, emotional support.", "iconEmoji": "🧠" },
+  { "id": "mystic", "name": "Mystic", "description": "Astrology, Tarot, Numerology insights.", "iconEmoji": "🔮" }
 ];
 
-// Using user-provided data for prompts
 const rawPromptsData: Prompt[] = [
   { "id": "pm1", "title": "Customer Persona Generator", "prompt": "Create a detailed customer persona for a digital marketing agency targeting local businesses.", "category": "marketing", "tools": ["ChatGPT", "Claude"], "isFeatured": true },
   { "id": "pm2", "title": "Ad Copy Generator", "prompt": "Write 3 variations of ad copy for Instagram promoting a skincare product line.", "category": "marketing", "tools": ["ChatGPT"], "isFeatured": false },

@@ -1,4 +1,3 @@
-
 import { HeroSection } from "@/components/hero-section";
 import { TagButtonsSection } from "@/components/tag-buttons-section";
 import { UpgradeProSection } from "@/components/upgrade-pro-section";

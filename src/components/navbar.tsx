@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -9,13 +8,14 @@ import { Container } from "./container";
 import type { NavItem } from "@/types";
 import { cn } from "@/lib/utils";
 import React from "react";
+import { ThemeToggleButton } from "./theme-toggle-button";
 
 const navItems: NavItem[] = [
-  { href: "#search", label: "Search", icon: Search }, // Assuming search input is part of CuratedCollectionsSection
-  { href: "#categories", label: "Categories", icon: LayoutGrid }, // Assuming categories are listed on the page
+  { href: "#search", label: "Search", icon: Search },
+  { href: "#categories", label: "Categories", icon: LayoutGrid },
   { href: "#upgrade", label: "Upgrade to PRO", icon: Zap, isCTA: true },
-  { href: "#profile", label: "Profile", icon: User }, // Placeholder link
-  { href: "#feedback", label: "Feedback", icon: MessageSquare }, // Placeholder link
+  { href: "#profile", label: "Profile", icon: User }, 
+  { href: "#feedback", label: "Feedback", icon: MessageSquare },
 ];
 
 export function Navbar() {
@@ -43,13 +43,14 @@ export function Navbar() {
           )}
         </nav>
 
-        <div className="hidden md:flex items-center space-x-3 ml-auto">
+        <div className="hidden md:flex items-center space-x-2 ml-auto">
+          <ThemeToggleButton />
           {navItems.find(item => item.isCTA) && (
              <Button
-                variant="default" // This uses the primary color from the theme
+                variant="default" 
                 size="sm"
                 asChild
-                className="text-primary-foreground hover:bg-primary/90"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 <Link href={navItems.find(item => item.isCTA)!.href}>
                   {navItems.find(item => item.isCTA)!.icon && React.createElement(navItems.find(item => item.isCTA)!.icon!, { className: "mr-2 h-4 w-4" })}
@@ -57,7 +58,6 @@ export function Navbar() {
                 </Link>
               </Button>
           )}
-          {/* For Profile and Feedback, using placeholder icons if no specific actions yet */}
           {navItems.filter(item => !item.isCTA && (item.label === "Profile" || item.label === "Feedback")).map(item => (
             <Button key={item.label} variant="ghost" size="icon" asChild>
                <Link href={item.href} aria-label={item.label}>
@@ -69,6 +69,7 @@ export function Navbar() {
 
 
         <div className="flex md:hidden items-center ml-auto">
+          <ThemeToggleButton />
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">

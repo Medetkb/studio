@@ -1,11 +1,10 @@
-
 "use client";
 
 import { Container } from "./container";
 
 export function HeroSection() {
   return (
-    <section className="py-16 md:py-24 bg-background animate-fadeIn">
+    <section className="py-16 md:py-24 bg-background animate-fadeIn opacity-0" style={{animationDelay: '0ms'}}>
       <Container className="text-center">
         <h1 className="font-headline text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground">
           Prompt Library for ChatGPT, Claude, Grok, DeepSeek and more

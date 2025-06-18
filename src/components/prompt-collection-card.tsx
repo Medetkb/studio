@@ -1,8 +1,7 @@
-
 "use client";
 
 import type React from 'react';
-import { CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { CardHeader, CardTitle, CardContent } from "@/components/ui/card"; // Card is not used directly here
 import type { PromptCollection } from "@/types"; 
 import { PromptCard } from "./prompt-card";
 
@@ -28,7 +27,7 @@ export function PromptCollectionCard({ collection, index }: PromptCollectionCard
       </CardHeader>
       <CardContent className="p-0"> 
         {collection.prompts && collection.prompts.length > 0 ? (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-1"> {/* Adjusted for single column layout within collection on larger screens if preferred, else md:grid-cols-2 */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-1">
             {collection.prompts.map((prompt, promptIdx) => (
               <PromptCard
                 key={prompt.id || prompt.title} 

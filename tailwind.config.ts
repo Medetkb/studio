@@ -98,6 +98,15 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fadeIn': 'fadeIn 0.5s ease-out forwards',
       },
+      transitionProperty: {
+        'colors': 'background-color, border-color, color, fill, stroke, text-decoration-color',
+        'transform': 'transform',
+        'shadow': 'box-shadow',
+        'opacity': 'opacity',
+        'spacing': 'margin, padding',
+        'size': 'width, height',
+        'all': 'all',
+      }
     },
   },
   plugins: [require('tailwindcss-animate')],

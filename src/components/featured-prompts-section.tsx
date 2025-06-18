@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Container } from "./container";
@@ -7,7 +6,6 @@ import type { Prompt } from "@/types";
 import { Star } from "lucide-react";
 
 // In a real app, this data would be fetched from Firestore.
-// Using user-provided data
 const rawPromptsData: Prompt[] = [
   { "id": "pm1", "title": "Customer Persona Generator", "prompt": "Create a detailed customer persona for a digital marketing agency targeting local businesses.", "category": "marketing", "tools": ["ChatGPT", "Claude"], "isFeatured": true },
   { "id": "pc1", "title": "YouTube Script Template", "prompt": "Create a script for a 5-minute educational video about AI tools for content creators.", "category": "content", "tools": ["ChatGPT", "DeepSeek"], "isFeatured": true },

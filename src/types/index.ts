@@ -1,4 +1,3 @@
-
 import type React from 'react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -16,14 +15,14 @@ export interface Category {
   id: string;
   name: string;
   description: string;
-  iconEmoji: string; 
+  iconEmoji: string; // Kept for potential future use or data consistency from source
   Icon?: LucideIcon; // Mapped Lucide icon component
 }
 
 export interface PromptCollection {
-  id: string;
-  name: string;
-  Icon?: LucideIcon;
+  id: string; // Category ID acts as collection ID
+  name: string; // Category name
+  Icon?: LucideIcon; // Category icon
   prompts: Prompt[];
 }
 

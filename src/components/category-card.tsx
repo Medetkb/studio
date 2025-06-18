@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -15,7 +14,7 @@ export function CategoryCard({ category, index }: CategoryCardProps) {
   return (
     <div className="block group h-full">
       <Card
-        className="h-full bg-card text-card-foreground shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn opacity-0"
+        className="h-full bg-card text-card-foreground shadow-md hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-103 animate-fadeIn opacity-0"
         style={{ animationDelay: `${index * 100 + 300}ms` }}
       >
         <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-4">

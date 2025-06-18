@@ -5,3 +5,19 @@ runConfig:
   # Increase this value if you'd like to automatically spin up
   # more instances in response to increased traffic.
   maxInstances: 1
+  # For Next.js, you might need to specify a higher memory limit if you encounter issues
+  # memoryMiB: 1024 
+  # cpu: 1 
+
+# buildSteps:
+#   - run: npm install --legacy-peer-deps # If you have peer dependency issues
+#   - run: npm run build
+
+# خدمت:
+#   # Specifies how to run the Next.js application
+#   # For Next.js apps using the App Router, this typically points to the .next/standalone server
+#   # or uses a command like `npm start` if your package.json is configured correctly.
+#   # App Hosting will often detect this automatically for Next.js.
+#   # main: node .next/standalone/server.js # Example for standalone output
+#   # main: npm start # If your `npm start` script runs the Next.js production server
+#   # The default behavior for Next.js should work with Firebase App Hosting.

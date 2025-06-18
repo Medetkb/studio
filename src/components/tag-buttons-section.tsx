@@ -1,4 +1,3 @@
-
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,7 @@ export function TagButtonsSection() {
             key={tag.id}
             variant="outline"
             size="lg"
-            className="rounded-full text-sm md:text-base border-primary/50 hover:bg-primary/10 hover:border-primary text-primary bg-card hover:text-primary focus:bg-primary/10 focus:text-primary focus:ring-2 focus:ring-primary/50 transition-all duration-200 ease-in-out shadow-sm animate-fadeIn opacity-0"
+            className="rounded-full text-sm md:text-base border-primary/50 text-primary bg-card hover:bg-primary/10 hover:border-primary hover:text-primary focus:bg-primary/10 focus:text-primary focus:ring-2 focus:ring-primary/50 transition-all duration-200 ease-in-out shadow-sm animate-fadeIn opacity-0"
             style={{ animationDelay: `${index * 100 + 200}ms` }}
           >
             {tag.name}

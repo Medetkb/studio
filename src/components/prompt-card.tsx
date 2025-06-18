@@ -1,4 +1,3 @@
-
 "use client";
 
 import type React from 'react';
@@ -37,7 +36,7 @@ export function PromptCard({ prompt, animationDelay }: PromptCardProps) {
 
   return (
     <Card
-      className="h-full flex flex-col bg-card text-card-foreground shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fadeIn opacity-0"
+      className="h-full flex flex-col bg-card text-card-foreground shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out hover:scale-103 animate-fadeIn opacity-0"
       style={{ animationDelay }}
     >
       <CardHeader>
@@ -51,16 +50,15 @@ export function PromptCard({ prompt, animationDelay }: PromptCardProps) {
       <CardFooter className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-4 border-t">
         <div className="flex flex-wrap gap-2">
           {prompt.tools.map((tool) => ( 
-            <Badge key={tool} variant="secondary" className="text-xs bg-accent/10 text-accent-foreground border-accent/30">
+            <Badge key={tool} variant="secondary" className="text-xs bg-accent/10 text-accent border-accent/30 dark:text-accent-foreground dark:bg-accent/20">
               {tool}
             </Badge>
           ))}
         </div>
         <Button
-          variant="ghost"
           size="sm"
           onClick={handleCopy}
-          className="text-primary hover:bg-primary/10 hover:text-primary active:bg-primary/20 transition-colors duration-200"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200"
           aria-label={`Copy prompt: ${prompt.title}`}
         >
           <ClipboardCopy className="h-4 w-4 mr-2" />
