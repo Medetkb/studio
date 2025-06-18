@@ -13,27 +13,33 @@ import { cn } from '@/lib/utils';
 
 // In a real app, this data would be fetched from Firestore.
 const rawCategoriesData: AppCategory[] = [
-  { "id": "marketing", "name": "Marketing & Sales", "description": "Target audience analysis, funnel building, conversion optimization.", "iconEmoji": "💼" },
-  { "id": "content", "name": "Content & Creativity", "description": "Content ideas, scripts, outlines, formats.", "iconEmoji": "✍️" },
-  { "id": "business", "name": "Business & Growth", "description": "Planning, automation, systems, team management.", "iconEmoji": "📊" },
-  { "id": "daily", "name": "Daily Productivity", "description": "Daily routines, task management, focus prompts.", "iconEmoji": "📆" },
-  { "id": "psychology", "name": "Psychology & Self-help", "description": "Self-reflection, mindset, emotional support.", "iconEmoji": "🧠" },
-  { "id": "mystic", "name": "Mystic", "description": "Astrology, Tarot, Numerology insights.", "iconEmoji": "🔮" }
+  { "id": "marketing", "name": "Marketing & Sales", "description": "Target audience analysis, funnel building, conversion optimization.", iconEmoji: "💼" },
+  { "id": "content", "name": "Content & Creativity", "description": "Content ideas, scripts, outlines, formats.", iconEmoji: "✍️" },
+  { "id": "business", "name": "Business & Growth", "description": "Planning, automation, systems, team management.", iconEmoji: "📊" },
+  { "id": "daily", "name": "Daily Productivity", "description": "Daily routines, task management, focus prompts.", iconEmoji: "📆" },
+  { "id": "psychology", "name": "Psychology & Self-help", "description": "Self-reflection, mindset, emotional support.", iconEmoji: "🧠" },
+  { "id": "mystic", "name": "Mystic", "description": "Astrology, Tarot, Numerology insights.", iconEmoji: "🔮" }
 ];
 
 const rawPromptsData: Prompt[] = [
   { "id": "pm1", "title": "Customer Persona Generator", "prompt": "Create a detailed customer persona for a digital marketing agency targeting local businesses.", "category": "marketing", "tools": ["ChatGPT", "Claude"], "isFeatured": true },
   { "id": "pm2", "title": "Ad Copy Generator", "prompt": "Write 3 variations of ad copy for Instagram promoting a skincare product line.", "category": "marketing", "tools": ["ChatGPT"], "isFeatured": false },
+  { "id": "pm3", "title": "SEO Keyword Strategy", "prompt": "Develop a list of 10 long-tail keywords for a new blog about sustainable fashion.", "category": "marketing", "tools": ["ChatGPT", "Grok"], "isFeatured": false },
   { "id": "pc1", "title": "YouTube Script Template", "prompt": "Create a script for a 5-minute educational video about AI tools for content creators.", "category": "content", "tools": ["ChatGPT", "DeepSeek"], "isFeatured": true },
   { "id": "pc2", "title": "30-Day Content Plan", "prompt": "Generate a 30-day content calendar for a lifestyle influencer on Instagram.", "category": "content", "tools": ["Claude", "Grok"], "isFeatured": false },
+  { "id": "pc3", "title": "Podcast Episode Outline", "prompt": "Create a detailed outline for a 30-minute podcast episode discussing the future of remote work.", "category": "content", "tools": ["Claude"], "isFeatured": false },
   { "id": "pb1", "title": "Business Growth Plan", "prompt": "Outline a 3-month growth strategy for a SaaS startup with under $10k MRR.", "category": "business", "tools": ["ChatGPT", "Claude", "Grok"], "isFeatured": true },
   { "id": "pb2", "title": "Automation Audit", "prompt": "Identify and list 5 business processes that could be automated in a solopreneur business.", "category": "business", "tools": ["ChatGPT"], "isFeatured": false },
+  { "id": "pb3", "title": "Competitor Analysis Prompt", "prompt": "Provide a framework for analyzing the top 3 competitors of an e-commerce store selling handmade jewelry.", "category": "business", "tools": ["ChatGPT"], "isFeatured": false },
   { "id": "pd1", "title": "Morning Routine Optimizer", "prompt": "Design a 30-minute productivity-focused morning routine for a remote worker.", "category": "daily", "tools": ["Claude"], "isFeatured": false },
   { "id": "pd2", "title": "Time Blocking Assistant", "prompt": "Help me organize my week into 3-hour work blocks using time blocking.", "category": "daily", "tools": ["Grok", "ChatGPT"], "isFeatured": false },
+  { "id": "pd3", "title": "Weekly Goal Setting", "prompt": "Help me set 3 achievable goals for the upcoming week, focusing on work-life balance.", "category": "daily", "tools": ["DeepSeek", "Claude"], "isFeatured": false },
   { "id": "pps1", "title": "Self-Reflection Prompt", "prompt": "Guide me through a deep self-reflection exercise on fear of failure.", "category": "psychology", "tools": ["Claude", "ChatGPT"], "isFeatured": true },
   { "id": "pps2", "title": "Overthinking Relief", "prompt": "Give me 5 journal prompts to help reduce overthinking before sleep.", "category": "psychology", "tools": ["ChatGPT"], "isFeatured": false },
+  { "id": "pps3", "title": "Gratitude Journal Prompts", "prompt": "Generate 5 unique gratitude journal prompts to encourage daily reflection.", "category": "psychology", "tools": ["ChatGPT"], "isFeatured": false },
   { "id": "pmys1", "title": "Daily Tarot Spread", "prompt": "Generate a 3-card daily tarot reading with interpretation and advice.", "category": "mystic", "tools": ["ChatGPT", "Grok"], "isFeatured": false },
-  { "id": "pmys2", "title": "Numerology Report", "prompt": "Create a personal numerology report based on my full birth name and date of birth.", "category": "mystic", "tools": ["Claude"], "isFeatured": true }
+  { "id": "pmys2", "title": "Numerology Report", "prompt": "Create a personal numerology report based on my full birth name and date of birth.", "category": "mystic", "tools": ["Claude"], "isFeatured": true },
+  { "id": "pmys4", "title": "Moon Phase Ritual Idea", "prompt": "Suggest a simple ritual for the next full moon to release negative energy.", "category": "mystic", "tools": ["Grok"], "isFeatured": false }
 ];
 
 const getIconForCategory = (categoryId: string) => {
@@ -129,7 +135,7 @@ export function CuratedCollectionsSection() {
                 "transition-all duration-200 ease-in-out animate-fadeIn opacity-0",
                 activeCategoryId === category.id && !isSearching 
                   ? "bg-primary text-primary-foreground font-semibold shadow-md hover:bg-primary/90" 
-                  : "text-foreground/80 border-border hover:bg-accent/10 hover:text-primary",
+                  : "text-foreground/80 border-border hover:bg-accent/10 hover:text-primary dark:hover:bg-accent/20 dark:hover:text-primary",
                 "rounded-md px-4 py-2 text-sm md:text-base" 
               )}
               style={{ animationDelay: `${index * 100 + 200}ms` }}
@@ -167,7 +173,7 @@ export function CuratedCollectionsSection() {
             // Category Accordion View
             <div 
               key={activeCollection.id} // Ensures re-render on category change for animation
-              className="animate-fadeIn" // Simple fade-in, more complex slide-down needs more CSS
+              className="animate-fadeIn" 
             >
               <PromptCollectionCard collection={activeCollection} index={0} />
             </div>
@@ -181,3 +187,4 @@ export function CuratedCollectionsSection() {
     </section>
   );
 }
+
