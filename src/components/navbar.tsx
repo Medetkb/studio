@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Search, LayoutGrid, User, MessageSquare, Zap } from "lucide-react";
+import { Menu, Search, LayoutDashboard, User, MessageSquare, Zap } from "lucide-react"; // Changed LayoutGrid to LayoutDashboard
 import { Container } from "./container";
 import type { NavItem } from "@/types";
 import { cn } from "@/lib/utils";
@@ -14,9 +14,9 @@ import { ThemeToggleButton } from "./theme-toggle-button";
 
 const navItems: NavItem[] = [
   { href: "#curated-collections-search-section", label: "Search", icon: Search, isPageLink: false },
-  { href: "/courses", label: "Courses", icon: LayoutGrid, isPageLink: true }, // Updated to /courses
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, isPageLink: true }, // Changed from Courses to Dashboard
   { href: "#upgrade-pro-section", label: "Upgrade to PRO", icon: Zap, isCTA: true, isPageLink: false },
-  { href: "#profile", label: "Profile", icon: User, isPageLink: false }, 
+  { href: "#profile", label: "Profile", icon: User, isPageLink: false },
   { href: "#feedback", label: "Feedback", icon: MessageSquare, isPageLink: false },
 ];
 
@@ -51,7 +51,7 @@ export function Navbar() {
           <ThemeToggleButton />
           {navItems.find(item => item.isCTA) && (
              <Button
-                variant="default" 
+                variant="default"
                 size="sm"
                 asChild
                 className="bg-primary text-primary-foreground hover:bg-primary/90"
