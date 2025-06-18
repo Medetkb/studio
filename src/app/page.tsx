@@ -17,10 +17,10 @@ export const metadata: Metadata = {
     description: 'Supercharge your AI interactions with a vast library of curated prompts. Save time and get better results.',
     images: [
       {
-        url: 'https://placehold.co/1200x630.png?text=Promptly+AI+Prompts',
-        width: 1200,
-        height: 630,
-        alt: 'Promptly AI Prompt Library',
+        url: '/promptly-dashboard-preview.png', // Updated OG image
+        width: 1200, // Standard OG width
+        height: 630, // Standard OG height
+        alt: 'Promptly AI Prompt Library Preview',
       },
     ],
     type: 'website',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Promptly - Powerful AI Prompts | Free & Premium Collections',
     description: 'Discover curated AI prompts to boost your productivity. Works with ChatGPT, Claude, and more!',
-    images: ['https://placehold.co/1200x630.png?text=Promptly+AI+Prompts'],
+    images: ['/promptly-dashboard-preview.png'], // Updated Twitter image
   },
 };
 
@@ -89,12 +89,12 @@ export default function PromoTurnedHomePage() { // Renamed function for clarity
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">See Promptly in Action</h2>
             <div className="shadow-2xl rounded-lg overflow-hidden border border-border">
               <Image
-                src="https://placehold.co/1000x600.png"
-                alt="Promptly Dashboard Preview"
+                src="/promptly-dashboard-preview.png" // Updated image source
+                alt="Preview of Promptly in action" // Updated alt text
                 width={1000}
                 height={600}
                 className="w-full h-auto"
-                data-ai-hint="dashboard mockup"
+                // data-ai-hint removed as a specific image is now used
               />
             </div>
           </Container>
