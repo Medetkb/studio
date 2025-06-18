@@ -21,3 +21,18 @@ export type Tag = {
   id: string;
   name: string;
 };
+
+export interface CategoryInfo {
+  id: string;
+  title: string;
+  description: string;
+  Icon: LucideIcon;
+  href: string;
+}
+
+export interface NavItem {
+  href: string;
+  label: string;
+  icon?: LucideIcon;
+  isCTA?: boolean;
+}
