@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Search, LayoutDashboard, User, MessageSquare, Zap } from "lucide-react"; // Changed LayoutGrid to LayoutDashboard
+import { Menu, Search, LayoutDashboard, User, MessageSquare, Zap } from "lucide-react";
 import { Container } from "./container";
 import type { NavItem } from "@/types";
 import { cn } from "@/lib/utils";
@@ -14,9 +14,9 @@ import { ThemeToggleButton } from "./theme-toggle-button";
 
 const navItems: NavItem[] = [
   { href: "#curated-collections-search-section", label: "Search", icon: Search, isPageLink: false },
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, isPageLink: true }, // Changed from Courses to Dashboard
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, isPageLink: true },
   { href: "#upgrade-pro-section", label: "Upgrade to PRO", icon: Zap, isCTA: true, isPageLink: false },
-  { href: "#profile", label: "Profile", icon: User, isPageLink: false },
+  { href: "/profile", label: "Profile", icon: User, isPageLink: true },
   { href: "#feedback", label: "Feedback", icon: MessageSquare, isPageLink: false },
 ];
 
@@ -33,7 +33,7 @@ export function Navbar() {
 
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium flex-grow">
           {navItems.map((item) => {
-            if (item.isCTA) return null;
+            if (item.isCTA || item.label === "Profile" || item.label === "Feedback") return null; // Skip CTA and icon-only items here
             const LinkComponent = item.isPageLink ? Link : 'a';
             return (
               <LinkComponent
@@ -62,13 +62,16 @@ export function Navbar() {
                 </Link>
               </Button>
           )}
-          {navItems.filter(item => !item.isCTA && (item.label === "Profile" || item.label === "Feedback")).map(item => (
-            <Button key={item.label} variant="ghost" size="icon" asChild>
-               <Link href={item.href} aria-label={item.label}>
-                {item.icon && React.createElement(item.icon, { className: "h-5 w-5 text-foreground/80 hover:text-primary"})}
-               </Link>
-            </Button>
-          ))}
+          {navItems.filter(item => !item.isCTA && (item.label === "Profile" || item.label === "Feedback")).map(item => {
+            const LinkComponent = item.isPageLink ? Link : 'a';
+            return (
+              <Button key={item.label} variant="ghost" size="icon" asChild>
+                <LinkComponent href={item.href} aria-label={item.label}>
+                  {item.icon && React.createElement(item.icon, { className: "h-5 w-5 text-foreground/80 hover:text-primary"})}
+                </LinkComponent>
+              </Button>
+            );
+          })}
         </div>
 
 

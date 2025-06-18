@@ -16,7 +16,7 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { PromptCard } from '@/components/prompt-card';
 import type { Prompt } from '@/types';
 
@@ -54,7 +54,7 @@ const placeholderPrompts: Prompt[] = [
 ];
 
 const sidebarNavItems = [
-  { label: "Profile Info", href: "#", icon: UserCircle }, // Updated to # for placeholder
+  { label: "Profile Info", href: "/profile", icon: UserCircle },
   { label: "Favorite Prompts", href: "#", icon: Heart },
   { label: "My Uploaded Prompts", href: "#", icon: UploadCloud },
   { label: "Settings", href: "#", icon: SettingsIcon },
@@ -68,14 +68,13 @@ export default function DashboardPage() {
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       <Navbar />
       <SidebarProvider defaultOpen={true}>
-        <div className="flex flex-1 mt-0"> {/* Removed mt-16 if navbar is sticky and part of this layout */}
+        <div className="flex flex-1 mt-0"> 
           <Sidebar collapsible="icon" className="hidden md:flex border-r bg-sidebar text-sidebar-foreground">
-            {/* Sidebar for desktop, collapsible to icons */}
             <SidebarContent className="p-2">
               <SidebarMenu>
                 {sidebarNavItems.map((item, index) => (
                   <SidebarMenuItem key={item.label} className="animate-fadeIn opacity-0" style={{ animationDelay: `${index * 100}ms` }}>
-                    <SidebarMenuButton asChild tooltip={item.label} isActive={false} >
+                    <SidebarMenuButton asChild tooltip={item.label} isActive={item.href === "/dashboard"} >
                       <Link href={item.href}>
                         <item.icon className="h-5 w-5" />
                         <span>{item.label}</span>
@@ -89,7 +88,7 @@ export default function DashboardPage() {
               <SidebarMenu className="animate-fadeIn opacity-0" style={{ animationDelay: `${sidebarNavItems.length * 100}ms` }}>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild tooltip="Logout">
-                    <Link href="#"> {/* Placeholder for logout */}
+                    <Link href="#"> 
                       <LogOut className="h-5 w-5" />
                       <span>Logout</span>
                     </Link>
