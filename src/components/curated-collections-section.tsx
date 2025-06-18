@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Container } from "./container";
@@ -10,7 +11,7 @@ const collectionsData: PromptCollection[] = [
   {
     id: "content",
     name: "Content Creation",
-    Icon: Palette, // Changed from Lightbulb for better relevance
+    Icon: Palette, 
     prompts: [
       { id: "p1", title: "Blog Post Ideas", description: "Generate 10 unique blog post ideas for a [topic].", contentToCopy: "Generate 10 unique blog post ideas for a [topic]. Consider current trends and evergreen content.", aiTools: ["ChatGPT", "Claude"] },
       { id: "p2", title: "Video Script Outline", description: "Create a script outline for a 5-minute YouTube video about [subject].", contentToCopy: "Create a script outline for a 5-minute YouTube video about [subject]. Include intro, main points, and call to action.", aiTools: ["Grok"] },

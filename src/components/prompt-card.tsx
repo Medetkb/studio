@@ -1,3 +1,4 @@
+
 "use client";
 
 import type React from 'react';
@@ -35,7 +36,10 @@ export function PromptCard({ prompt, animationDelay }: PromptCardProps) {
   };
 
   return (
-    <Card className="h-full flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fadeIn opacity-0" style={{ animationDelay }}>
+    <Card 
+      className="h-full flex flex-col bg-card text-card-foreground shadow-lg hover:shadow-xl transition-shadow duration-300 animate-fadeIn opacity-0" 
+      style={{ animationDelay }}
+    >
       <CardHeader>
         <CardTitle className="text-lg font-semibold text-foreground">{prompt.title}</CardTitle>
       </CardHeader>
@@ -56,7 +60,7 @@ export function PromptCard({ prompt, animationDelay }: PromptCardProps) {
           variant="ghost"
           size="sm"
           onClick={handleCopy}
-          className="text-primary hover:bg-primary/10 hover:text-primary active:bg-primary/20"
+          className="text-primary hover:bg-primary/10 hover:text-primary active:bg-primary/20 transition-colors duration-200"
           aria-label={`Copy prompt: ${prompt.title}`}
         >
           <ClipboardCopy className="h-4 w-4 mr-2" />
