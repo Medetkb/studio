@@ -1,11 +1,15 @@
+
 "use client";
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Container } from "./container";
 import { PromptCollectionCard } from "./prompt-collection-card";
+import { PromptCard } from "./prompt-card";
 import { SearchInput } from "./search-input";
+import { Button } from "@/components/ui/button";
 import type { Prompt, Category as AppCategory, PromptCollection } from "@/types";
 import { Briefcase, Palette, TrendingUp, ListChecks, Brain, Sparkles, Megaphone } from "lucide-react";
+import { cn } from '@/lib/utils';
 
 // In a real app, this data would be fetched from Firestore.
 const rawCategoriesData: AppCategory[] = [
@@ -44,28 +48,52 @@ const getIconForCategory = (categoryId: string) => {
   }
 };
 
+const categoriesWithIcons: AppCategory[] = rawCategoriesData.map(category => ({
+  ...category,
+  Icon: getIconForCategory(category.id),
+}));
+
 export function CuratedCollectionsSection() {
+  const [activeCategoryId, setActiveCategoryId] = useState<string | null>(categoriesWithIcons[0]?.id || null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
 
-  const collectionsData: PromptCollection[] = useMemo(() => {
-    return rawCategoriesData.map(category => {
-      let filteredCategoryPrompts = rawPromptsData.filter(prompt => prompt.category === category.id);
-
-      if (searchTerm) {
-        filteredCategoryPrompts = filteredCategoryPrompts.filter(prompt =>
-          prompt.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          prompt.prompt.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-      }
-      
-      return {
-        id: category.id,
-        name: category.name,
-        Icon: getIconForCategory(category.id),
-        prompts: filteredCategoryPrompts,
-      };
-    }).filter(collection => collection.prompts.length > 0 || !searchTerm); 
+  useEffect(() => {
+    setIsSearching(searchTerm.trim() !== '');
   }, [searchTerm]);
+
+  const displayedPrompts = useMemo(() => {
+    let prompts = rawPromptsData;
+    if (isSearching) {
+      // Search across all categories
+      prompts = prompts.filter(prompt =>
+        prompt.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        prompt.prompt.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    } else if (activeCategoryId) {
+      // Filter by active category if not searching
+      prompts = prompts.filter(prompt => prompt.category === activeCategoryId);
+    } else {
+        // If no category is active and not searching (e.g. initial state if activeCategoryId was null)
+        prompts = [];
+    }
+    return prompts;
+  }, [searchTerm, activeCategoryId, isSearching]);
+
+  const activeCollection: PromptCollection | undefined = useMemo(() => {
+    if (!isSearching && activeCategoryId) {
+      const category = categoriesWithIcons.find(cat => cat.id === activeCategoryId);
+      if (category) {
+        return {
+          id: category.id,
+          name: category.name,
+          Icon: category.Icon,
+          prompts: displayedPrompts, // These are already filtered for the active category
+        };
+      }
+    }
+    return undefined;
+  }, [activeCategoryId, displayedPrompts, isSearching]);
 
   return (
     <section className="py-12 md:py-16 animate-fadeIn animation-delay-300 opacity-0">
@@ -75,26 +103,80 @@ export function CuratedCollectionsSection() {
             Curated Prompt Collections
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Explore expertly crafted prompts organized by category. Search by keyword to find what you need.
+            Explore expertly crafted prompts. Select a category or search by keyword.
           </p>
         </div>
-        <div id="curated-collections-search-section" className="mb-10 md:mb-12">
+
+        <div id="curated-collections-search-section" className="mb-8 md:mb-10">
           <SearchInput 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search all prompts by keyword..."
           />
         </div>
-        {collectionsData.length > 0 ? (
-          <div className="space-y-10">
-            {collectionsData.map((collection, index) => (
-              <PromptCollectionCard key={collection.id} collection={collection} index={index} />
-            ))}
-          </div>
-        ) : (
-           <p className="text-center text-muted-foreground text-lg">
-            No prompts match your search criteria. Try a different keyword.
-          </p>
-        )}
+
+        <div className="mb-8 md:mb-10 flex flex-wrap justify-center gap-2 md:gap-3">
+          {categoriesWithIcons.map((category, index) => (
+            <Button
+              key={category.id}
+              variant={activeCategoryId === category.id && !isSearching ? "default" : "outline"}
+              onClick={() => {
+                setActiveCategoryId(category.id);
+                // Optionally clear search when a category is clicked
+                // setSearchTerm(''); 
+              }}
+              className={cn(
+                "transition-all duration-200 ease-in-out animate-fadeIn opacity-0",
+                activeCategoryId === category.id && !isSearching 
+                  ? "bg-primary text-primary-foreground font-semibold shadow-md hover:bg-primary/90" 
+                  : "text-foreground/80 border-border hover:bg-accent/10 hover:text-primary",
+                "rounded-md px-4 py-2 text-sm md:text-base" 
+              )}
+              style={{ animationDelay: `${index * 100 + 200}ms` }}
+            >
+              {category.Icon && <category.Icon className="mr-2 h-4 w-4" />}
+              {category.name}
+            </Button>
+          ))}
+        </div>
+        
+        <div className="mt-8 min-h-[300px]"> {/* Added min-height for smoother transitions */}
+          {isSearching ? (
+            // Search Results View
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-center text-foreground animate-fadeIn opacity-0" style={{animationDelay: '100ms'}}>
+                Search Results for "{searchTerm}"
+              </h3>
+              {displayedPrompts.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8">
+                  {displayedPrompts.map((prompt, index) => (
+                    <PromptCard 
+                      key={prompt.id || index} 
+                      prompt={prompt} 
+                      animationDelay={`${index * 100 + 200}ms`}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center text-muted-foreground py-8 animate-fadeIn opacity-0" style={{animationDelay: '200ms'}}>
+                  No prompts found matching your search term.
+                </p>
+              )}
+            </div>
+          ) : activeCollection ? (
+            // Category Accordion View
+            <div 
+              key={activeCollection.id} // Ensures re-render on category change for animation
+              className="animate-fadeIn" // Simple fade-in, more complex slide-down needs more CSS
+            >
+              <PromptCollectionCard collection={activeCollection} index={0} />
+            </div>
+          ) : (
+             <p className="text-center text-muted-foreground py-8 animate-fadeIn opacity-0" style={{animationDelay: '200ms'}}>
+               Select a category to view prompts.
+             </p>
+          )}
+        </div>
       </Container>
     </section>
   );

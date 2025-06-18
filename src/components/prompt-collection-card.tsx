@@ -1,3 +1,4 @@
+
 "use client";
 
 import type React from 'react';
@@ -12,14 +13,15 @@ interface PromptCollectionCardProps {
 
 export function PromptCollectionCard({ collection, index }: PromptCollectionCardProps) {
   const IconComponent = collection.Icon;
-  const baseDelay = index * 150 + 500; 
+  // Animation delay for the collection card itself
+  const collectionAnimationDelay = `${index * 150 + 100}ms`; 
 
   return (
     <div
-      className="animate-fadeIn opacity-0"
-      style={{ animationDelay: `${baseDelay}ms` }}
+      className="animate-fadeIn opacity-0" // Overall container animation
+      style={{ animationDelay: collectionAnimationDelay }}
     >
-      <CardHeader className="mb-0 pb-2 pt-4 px-0"> 
+      <CardHeader className="mb-0 pb-4 pt-4 px-0"> 
         <CardTitle className="text-xl md:text-2xl font-headline font-semibold text-foreground flex items-center gap-3">
           {IconComponent && <IconComponent className="h-6 w-6 text-primary" />}
           {collection.name}
@@ -27,17 +29,20 @@ export function PromptCollectionCard({ collection, index }: PromptCollectionCard
       </CardHeader>
       <CardContent className="p-0"> 
         {collection.prompts && collection.prompts.length > 0 ? (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8">
             {collection.prompts.map((prompt, promptIdx) => (
               <PromptCard
                 key={prompt.id || prompt.title} 
                 prompt={prompt}
-                animationDelay={`${baseDelay + (promptIdx + 1) * 100}ms`}
+                // Stagger animation for prompt cards within the collection
+                animationDelay={`${100 + (promptIdx + 1) * 100}ms`}
               />
             ))}
           </div>
         ) : (
-          <p className="text-muted-foreground text-sm py-4">No prompts found for this collection or filter.</p>
+          <p className="text-muted-foreground text-sm py-4 text-center animate-fadeIn opacity-0" style={{animationDelay: '200ms'}}>
+            No prompts found in this collection.
+          </p>
         )}
       </CardContent>
     </div>

@@ -1,9 +1,14 @@
+
 "use client";
 
 import { Container } from "./container";
 import { CategoryCard } from "./category-card";
 import type { Category } from "@/types";
 import { Briefcase, Palette, TrendingUp, ListChecks, Brain, Sparkles, Megaphone } from "lucide-react";
+
+// This component is no longer the primary way categories are displayed on the homepage.
+// It is kept here for potential reuse on other pages or if the design changes.
+// The main category filtering and display logic is now in CuratedCollectionsSection.tsx.
 
 // In a real app, this data would be fetched from Firestore.
 const rawCategoriesData = [
@@ -39,8 +44,8 @@ const rawCategoriesData = [
   },
   {
     "id": "mystic",
-    "name": "Mystic", // Updated name
-    "description": "Astrology, Tarot, Numerology insights.", // Updated description
+    "name": "Mystic", 
+    "description": "Astrology, Tarot, Numerology insights.", 
     "iconEmoji": "🔮"
   }
 ];
