@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Search, LayoutDashboard, User, MessageSquare, Zap } from "lucide-react";
+import { Menu, Search, LayoutDashboard, User, MessageSquare, Zap, LayoutGrid } from "lucide-react"; // Added LayoutGrid
 import { Container } from "./container";
 import type { NavItem } from "@/types";
 import { cn } from "@/lib/utils";
@@ -14,9 +14,10 @@ import { ThemeToggleButton } from "./theme-toggle-button";
 
 const navItems: NavItem[] = [
   { href: "#curated-collections-search-section", label: "Search", icon: Search, isPageLink: false },
+  { href: "/courses", label: "Courses", icon: LayoutGrid, isPageLink: true }, // Changed from Categories to Courses
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, isPageLink: true },
   { href: "#upgrade-pro-section", label: "Upgrade to PRO", icon: Zap, isCTA: true, isPageLink: false },
-  { href: "/profile", label: "Profile", icon: User, isPageLink: true },
+  { href: "/profile", label: "Profile", icon: User, isPageLink: true }, // Ensure this links to /profile
   { href: "#feedback", label: "Feedback", icon: MessageSquare, isPageLink: false },
 ];
 
@@ -33,7 +34,9 @@ export function Navbar() {
 
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium flex-grow">
           {navItems.map((item) => {
-            if (item.isCTA || item.label === "Profile" || item.label === "Feedback") return null; // Skip CTA and icon-only items here
+            // Skip CTA, Profile, and Feedback for text links here; they are handled as buttons/icons
+            if (item.isCTA || item.label === "Profile" || item.label === "Feedback") return null; 
+            
             const LinkComponent = item.isPageLink ? Link : 'a';
             return (
               <LinkComponent
@@ -41,6 +44,7 @@ export function Navbar() {
                 href={item.href}
                 className="transition-colors hover:text-primary text-foreground/80"
               >
+                {item.icon && React.createElement(item.icon, { className: "mr-2 h-4 w-4 inline-block" }) }
                 {item.label}
               </LinkComponent>
             );
@@ -62,6 +66,7 @@ export function Navbar() {
                 </Link>
               </Button>
           )}
+          {/* Profile and Feedback Icon Buttons */}
           {navItems.filter(item => !item.isCTA && (item.label === "Profile" || item.label === "Feedback")).map(item => {
             const LinkComponent = item.isPageLink ? Link : 'a';
             return (
@@ -96,7 +101,11 @@ export function Navbar() {
                     <LinkComponent
                       key={item.label}
                       href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={() => {
+                        // For same-page anchor links, smooth scroll might need manual handling or specific library if not default browser behavior
+                        // For page links, Next.js handles navigation
+                        setIsMobileMenuOpen(false);
+                      }}
                       className={cn(
                         "flex items-center space-x-3 rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
                         item.isCTA ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "text-foreground/80"
@@ -115,3 +124,5 @@ export function Navbar() {
     </header>
   );
 }
+
+    

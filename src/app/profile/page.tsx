@@ -17,15 +17,18 @@ import {
 } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { UserCircle, Heart, UploadCloud, Settings as SettingsIcon, LogOut, Edit3, Shield, Bell } from "lucide-react";
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { UserCircle, LayoutGrid, Settings, Shield, Bell, LogOut, UploadCloud } from "lucide-react";
 
+// Updated sidebar navigation items for the profile page
 const profileSidebarNavItems = [
-  { label: "Profile Info", href: "/profile", icon: UserCircle, isActive: true },
-  { label: "Favorite Prompts", href: "#", icon: Heart, isActive: false },
-  { label: "My Uploaded Prompts", href: "#", icon: UploadCloud, isActive: false },
-  { label: "Account Settings", href: "#", icon: SettingsIcon, isActive: false },
-  { label: "Security", href: "#", icon: Shield, isActive: false },
-  { label: "Notifications", href: "#", icon: Bell, isActive: false },
+  { label: "Profile Overview", href: "/profile", icon: UserCircle, isActive: true },
+  { label: "My Prompts", href: "/dashboard", icon: LayoutGrid, isActive: false }, // Link to dashboard where prompts are shown
+  { label: "Account Settings", href: "#settings", icon: Settings, isActive: false },
+  { label: "Security", href: "#security", icon: Shield, isActive: false },
+  { label: "Notifications", href: "#notifications", icon: Bell, isActive: false },
 ];
 
 export default function ProfilePage() {
@@ -66,49 +69,85 @@ export default function ProfilePage() {
           <SidebarInset>
             <main className="flex-grow p-4 sm:p-6 md:p-8 animate-fadeIn opacity-0" style={{ animationDelay: '100ms' }}>
               <Container>
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">Profile Information</h1>
-                  <Button variant="outline" className="w-full sm:w-auto">
-                     <Edit3 className="mr-2 h-4 w-4" /> Edit Profile
-                  </Button>
+                <div className="mb-8">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">Profile & Account Management</h1>
+                  <p className="text-muted-foreground mt-1">Manage your profile details and account settings.</p>
                 </div>
 
                 <Card className="shadow-lg rounded-xl overflow-hidden animate-fadeIn opacity-0" style={{ animationDelay: '200ms' }}>
                   <CardHeader>
-                    <CardTitle className="text-xl">User Details</CardTitle>
-                    <CardDescription>Manage your personal information and account settings.</CardDescription>
+                    <CardTitle className="text-xl">User Profile</CardTitle>
+                    <CardDescription>Update your personal information and preferences.</CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <h3 className="font-semibold text-muted-foreground mb-1">Full Name</h3>
-                        <p className="text-foreground">John Doe (Placeholder)</p>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-muted-foreground mb-1">Email Address</h3>
-                        <p className="text-foreground">john.doe@example.com (Placeholder)</p>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-muted-foreground mb-1">Member Since</h3>
-                        <p className="text-foreground">January 1, 2024 (Placeholder)</p>
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-muted-foreground mb-1">Subscription Plan</h3>
-                        <p className="text-foreground">Free Tier (Placeholder)</p>
+                  <CardContent className="space-y-8">
+                    {/* Avatar Section */}
+                    <div className="flex flex-col sm:flex-row items-center gap-6 pt-2">
+                      <Avatar className="h-24 w-24 border-2 border-primary shadow-md">
+                        <AvatarImage src="https://placehold.co/100x100.png" alt="User Avatar" data-ai-hint="avatar person" />
+                        <AvatarFallback>JD</AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col gap-2 items-center sm:items-start">
+                         <Button variant="outline">
+                           <UploadCloud className="mr-2 h-4 w-4" /> Change Avatar
+                         </Button>
+                         <p className="text-xs text-muted-foreground">PNG, JPG, GIF up to 5MB.</p>
                       </div>
                     </div>
-                    <div className="mt-6 pt-6 border-t border-border/50">
-                        <h3 className="text-lg font-semibold text-foreground mb-3">Bio</h3>
-                        <p className="text-muted-foreground italic">
-                            This is a placeholder bio. Users will be able to update this section with their personal or professional information.
-                            It can include interests, expertise, or how they use AI prompts.
-                        </p>
+
+                    {/* Personal Information Section */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-medium text-foreground border-b pb-2">Personal Information</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-1.5">
+                          <Label htmlFor="displayName">Display Name</Label>
+                          <Input id="displayName" placeholder="John Doe" defaultValue="John Doe (Placeholder)" />
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label htmlFor="email">Email Address</Label>
+                          <Input id="email" type="email" placeholder="john.doe@example.com" defaultValue="john.doe@example.com (Placeholder)" readOnly className="bg-muted/50 cursor-not-allowed" />
+                           <Button variant="link" className="p-0 h-auto text-xs text-primary hover:underline">Change Email</Button>
+                        </div>
+                      </div>
+                       <div className="space-y-1.5">
+                          <Label htmlFor="bio">Bio</Label>
+                          <textarea 
+                            id="bio" 
+                            placeholder="Tell us a bit about yourself..." 
+                            className="w-full min-h-[80px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                            defaultValue="AI enthusiast and prompt engineer. Exploring the creative potential of large language models. (Placeholder)"
+                          />
+                        </div>
+                    </div>
+
+                    {/* Password Section */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-medium text-foreground border-b pb-2">Change Password</h3>
+                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-1.5">
+                          <Label htmlFor="currentPassword">Current Password</Label>
+                          <Input id="currentPassword" type="password" placeholder="Enter current password" />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-1.5">
+                          <Label htmlFor="newPassword">New Password</Label>
+                          <Input id="newPassword" type="password" placeholder="Enter new password" />
+                        </div>
+                        <div className="space-y-1.5">
+                          <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                          <Input id="confirmPassword" type="password" placeholder="Confirm new password" />
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex justify-end pt-4">
+                      <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
+                        Save Changes
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
                 
-                {/* Add more profile sections as needed, e.g., change password, linked accounts */}
-
               </Container>
             </main>
           </SidebarInset>
@@ -123,3 +162,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+    

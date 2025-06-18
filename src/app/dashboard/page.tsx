@@ -54,7 +54,7 @@ const placeholderPrompts: Prompt[] = [
 ];
 
 const sidebarNavItems = [
-  { label: "Profile Info", href: "/profile", icon: UserCircle },
+  { label: "Profile Info", href: "/profile", icon: UserCircle }, // Updated to /profile
   { label: "Favorite Prompts", href: "#", icon: Heart },
   { label: "My Uploaded Prompts", href: "#", icon: UploadCloud },
   { label: "Settings", href: "#", icon: SettingsIcon },
@@ -142,3 +142,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
