@@ -89,12 +89,11 @@ export default function PromoTurnedHomePage() { // Renamed function for clarity
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">See Promptly in Action</h2>
             <div className="shadow-2xl rounded-lg overflow-hidden border border-border">
               <Image
-                src="/promptly-dashboard-preview.png" // Updated image source
-                alt="Preview of Promptly in action" // Updated alt text
+                src="/promptly-dashboard-preview.png" 
+                alt="Promptly interface preview" 
                 width={1000}
                 height={600}
                 className="w-full h-auto"
-                // data-ai-hint removed as a specific image is now used
               />
             </div>
           </Container>
@@ -187,3 +186,4 @@ export default function PromoTurnedHomePage() { // Renamed function for clarity
     </div>
   );
 }
+
