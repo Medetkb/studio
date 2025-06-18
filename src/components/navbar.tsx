@@ -1,3 +1,4 @@
+
 // @ts-nocheck
 "use client";
 
@@ -12,11 +13,11 @@ import React from "react";
 import { ThemeToggleButton } from "./theme-toggle-button";
 
 const navItems: NavItem[] = [
-  { href: "#curated-collections-search-section", label: "Search", icon: Search },
-  { href: "#categories-section", label: "Categories", icon: LayoutGrid },
-  { href: "#upgrade-pro-section", label: "Upgrade to PRO", icon: Zap, isCTA: true },
-  { href: "#profile", label: "Profile", icon: User }, 
-  { href: "#feedback", label: "Feedback", icon: MessageSquare },
+  { href: "#curated-collections-search-section", label: "Search", icon: Search, isPageLink: false },
+  { href: "/courses", label: "Courses", icon: LayoutGrid, isPageLink: true }, // Updated to /courses
+  { href: "#upgrade-pro-section", label: "Upgrade to PRO", icon: Zap, isCTA: true, isPageLink: false },
+  { href: "#profile", label: "Profile", icon: User, isPageLink: false }, 
+  { href: "#feedback", label: "Feedback", icon: MessageSquare, isPageLink: false },
 ];
 
 export function Navbar() {
@@ -31,17 +32,19 @@ export function Navbar() {
         </Link>
 
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium flex-grow">
-          {navItems.map((item) =>
-            item.isCTA ? null : (
-              <Link
+          {navItems.map((item) => {
+            if (item.isCTA) return null;
+            const LinkComponent = item.isPageLink ? Link : 'a';
+            return (
+              <LinkComponent
                 key={item.label}
                 href={item.href}
                 className="transition-colors hover:text-primary text-foreground/80"
               >
                 {item.label}
-              </Link>
-            )
-          )}
+              </LinkComponent>
+            );
+          })}
         </nav>
 
         <div className="hidden md:flex items-center space-x-2 ml-auto">
@@ -84,20 +87,23 @@ export function Navbar() {
                   <Zap className="h-6 w-6 text-primary" />
                   <span className="font-bold text-lg">Promptly</span>
                 </Link>
-                {navItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={cn(
-                      "flex items-center space-x-3 rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
-                      item.isCTA ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "text-foreground/80"
-                    )}
-                  >
-                    {item.icon && <item.icon className="h-5 w-5" />}
-                    <span>{item.label}</span>
-                  </Link>
-                ))}
+                {navItems.map((item) => {
+                  const LinkComponent = item.isPageLink ? Link : 'a';
+                  return (
+                    <LinkComponent
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={cn(
+                        "flex items-center space-x-3 rounded-md px-3 py-2 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
+                        item.isCTA ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground" : "text-foreground/80"
+                      )}
+                    >
+                      {item.icon && <item.icon className="h-5 w-5" />}
+                      <span>{item.label}</span>
+                    </LinkComponent>
+                  );
+                })}
               </div>
             </SheetContent>
           </Sheet>
