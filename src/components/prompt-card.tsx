@@ -18,7 +18,7 @@ export function PromptCard({ prompt, animationDelay }: PromptCardProps) {
   const { toast } = useToast();
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(prompt.prompt) // Use prompt.prompt for contentToCopy
+    navigator.clipboard.writeText(prompt.prompt) 
       .then(() => {
         toast({
           title: "Copied to clipboard!",
@@ -44,14 +44,13 @@ export function PromptCard({ prompt, animationDelay }: PromptCardProps) {
         <CardTitle className="text-lg font-semibold text-foreground">{prompt.title}</CardTitle>
       </CardHeader>
       <CardContent className="flex-grow">
-        {/* Display the main prompt text here. Use prompt.description if you add that field for shorter summaries. */}
         <CardDescription className="text-sm text-muted-foreground line-clamp-3">
           {prompt.prompt}
         </CardDescription>
       </CardContent>
       <CardFooter className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pt-4 border-t">
         <div className="flex flex-wrap gap-2">
-          {prompt.tools.map((tool) => ( // Use prompt.tools
+          {prompt.tools.map((tool) => ( 
             <Badge key={tool} variant="secondary" className="text-xs bg-accent/10 text-accent-foreground border-accent/30">
               {tool}
             </Badge>

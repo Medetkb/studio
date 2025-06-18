@@ -5,11 +5,11 @@ import React, { useState, useMemo } from 'react';
 import { Container } from "./container";
 import { PromptCollectionCard } from "./prompt-collection-card";
 import { SearchInput } from "./search-input";
-import type { Prompt, Category as AppCategory, PromptCollection } from "@/types"; // Renamed Category to AppCategory to avoid conflict
-import { Briefcase, Palette, TrendingUp, ListChecks, Brain, Sparkles, Megaphone } from "lucide-react"; // Import necessary icons
+import type { Prompt, Category as AppCategory, PromptCollection } from "@/types";
+import { Briefcase, Palette, TrendingUp, ListChecks, Brain, Sparkles, Megaphone } from "lucide-react";
 
 // In a real app, this data would be fetched from Firestore.
-// Using user-provided data
+// Using user-provided data for categories
 const rawCategoriesData: AppCategory[] = [
   { "id": "marketing", "name": "Marketing & Sales", "description": "Target audience analysis, funnel creation, keyword research, sales strategy prompts.", "iconEmoji": "💼" },
   { "id": "content", "name": "Content & Creativity", "description": "Generate content ideas, scripts, outlines, and formats for social media, blogs, and YouTube.", "iconEmoji": "✍️" },
@@ -19,6 +19,7 @@ const rawCategoriesData: AppCategory[] = [
   { "id": "mystic", "name": "Astrology, Tarot & Numerology", "description": "Mystic-themed prompts for daily readings, birth charts, and spiritual guidance.", "iconEmoji": "🔮" }
 ];
 
+// Using user-provided data for prompts
 const rawPromptsData: Prompt[] = [
   { "id": "pm1", "title": "Customer Persona Generator", "prompt": "Create a detailed customer persona for a digital marketing agency targeting local businesses.", "category": "marketing", "tools": ["ChatGPT", "Claude"], "isFeatured": true },
   { "id": "pm2", "title": "Ad Copy Generator", "prompt": "Write 3 variations of ad copy for Instagram promoting a skincare product line.", "category": "marketing", "tools": ["ChatGPT"], "isFeatured": false },
@@ -42,7 +43,7 @@ const getIconForCategory = (categoryId: string) => {
     case "daily": return ListChecks;
     case "psychology": return Brain;
     case "mystic": return Sparkles;
-    default: return Megaphone; // Fallback
+    default: return Megaphone; 
   }
 };
 
@@ -51,10 +52,10 @@ export function CuratedCollectionsSection() {
 
   const collectionsData: PromptCollection[] = useMemo(() => {
     return rawCategoriesData.map(category => {
-      let FiltedCategoryPrompts = rawPromptsData.filter(prompt => prompt.category === category.id);
+      let filteredCategoryPrompts = rawPromptsData.filter(prompt => prompt.category === category.id);
 
       if (searchTerm) {
-        FiltedCategoryPrompts = FiltedCategoryPrompts.filter(prompt =>
+        filteredCategoryPrompts = filteredCategoryPrompts.filter(prompt =>
           prompt.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           prompt.prompt.toLowerCase().includes(searchTerm.toLowerCase())
         );
@@ -64,9 +65,9 @@ export function CuratedCollectionsSection() {
         id: category.id,
         name: category.name,
         Icon: getIconForCategory(category.id),
-        prompts: FiltedCategoryPrompts,
+        prompts: filteredCategoryPrompts,
       };
-    }).filter(collection => collection.prompts.length > 0 || !searchTerm); // Show collection if it has prompts or if no search term
+    }).filter(collection => collection.prompts.length > 0 || !searchTerm); 
   }, [searchTerm]);
 
   return (

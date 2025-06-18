@@ -1,9 +1,8 @@
 
 "use client";
 
-import Link from "next/link"; // Link might not be used if not navigating directly
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import type { Category } from "@/types"; // Updated type
+import type { Category } from "@/types"; 
 
 interface CategoryCardProps {
   category: Category;
@@ -11,13 +10,9 @@ interface CategoryCardProps {
 }
 
 export function CategoryCard({ category, index }: CategoryCardProps) {
-  const IconComponent = category.Icon; // Assumes Icon is now populated with LucideIcon
+  const IconComponent = category.Icon; 
 
-  // If you want clicking category cards to filter content on the page,
-  // you might replace Link with a button or div and an onClick handler.
-  // For now, it's a static display card.
   return (
-    // <Link href={`#${category.id}`} className="block group"> // href might change based on filtering strategy
     <div className="block group h-full">
       <Card
         className="h-full bg-card text-card-foreground shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 animate-fadeIn opacity-0"
@@ -38,6 +33,5 @@ export function CategoryCard({ category, index }: CategoryCardProps) {
         </CardDescription>
       </Card>
     </div>
-    // </Link>
   );
 }

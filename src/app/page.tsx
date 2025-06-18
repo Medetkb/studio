@@ -1,11 +1,10 @@
 
-
 import { HeroSection } from "@/components/hero-section";
 import { TagButtonsSection } from "@/components/tag-buttons-section";
 import { UpgradeProSection } from "@/components/upgrade-pro-section";
 import { CuratedCollectionsSection } from "@/components/curated-collections-section";
 import { CategoryCardsSection } from "@/components/category-cards-section";
-import { FeaturedPromptsSection } from "@/components/featured-prompts-section"; // New import
+import { FeaturedPromptsSection } from "@/components/featured-prompts-section";
 import { Navbar } from "@/components/navbar";
 import { Separator } from "@/components/ui/separator";
 
@@ -16,7 +15,6 @@ export default function Home() {
       <main className="flex-grow">
         <HeroSection />
         <TagButtonsSection />
-        {/* Consider placing FeaturedPromptsSection here if prominent */}
         <FeaturedPromptsSection /> 
         <div className="py-4 animate-fadeIn animation-delay-500 opacity-0">
           <Separator className="my-6 md:my-8 max-w-4xl mx-auto" />

@@ -11,11 +11,11 @@ import { cn } from "@/lib/utils";
 import React from "react";
 
 const navItems: NavItem[] = [
-  { href: "#search", label: "Search", icon: Search },
-  { href: "#categories", label: "Categories", icon: LayoutGrid },
+  { href: "#search", label: "Search", icon: Search }, // Assuming search input is part of CuratedCollectionsSection
+  { href: "#categories", label: "Categories", icon: LayoutGrid }, // Assuming categories are listed on the page
   { href: "#upgrade", label: "Upgrade to PRO", icon: Zap, isCTA: true },
-  { href: "#profile", label: "Profile", icon: User },
-  { href: "#feedback", label: "Feedback", icon: MessageSquare },
+  { href: "#profile", label: "Profile", icon: User }, // Placeholder link
+  { href: "#feedback", label: "Feedback", icon: MessageSquare }, // Placeholder link
 ];
 
 export function Navbar() {
@@ -46,10 +46,10 @@ export function Navbar() {
         <div className="hidden md:flex items-center space-x-3 ml-auto">
           {navItems.find(item => item.isCTA) && (
              <Button
-                variant="default"
+                variant="default" // This uses the primary color from the theme
                 size="sm"
                 asChild
-                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                className="text-primary-foreground hover:bg-primary/90"
               >
                 <Link href={navItems.find(item => item.isCTA)!.href}>
                   {navItems.find(item => item.isCTA)!.icon && React.createElement(navItems.find(item => item.isCTA)!.icon!, { className: "mr-2 h-4 w-4" })}
@@ -57,10 +57,11 @@ export function Navbar() {
                 </Link>
               </Button>
           )}
-          {navItems.filter(item => !item.isCTA && (item.label === "Profile")).map(item => (
+          {/* For Profile and Feedback, using placeholder icons if no specific actions yet */}
+          {navItems.filter(item => !item.isCTA && (item.label === "Profile" || item.label === "Feedback")).map(item => (
             <Button key={item.label} variant="ghost" size="icon" asChild>
                <Link href={item.href} aria-label={item.label}>
-                {item.icon && React.createElement(item.icon, { className: "h-5 w-5"})}
+                {item.icon && React.createElement(item.icon, { className: "h-5 w-5 text-foreground/80 hover:text-primary"})}
                </Link>
             </Button>
           ))}
@@ -71,7 +72,7 @@ export function Navbar() {
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
+                <Menu className="h-6 w-6 text-foreground/80" />
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>

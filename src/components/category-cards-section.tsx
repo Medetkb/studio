@@ -4,9 +4,10 @@
 import { Container } from "./container";
 import { CategoryCard } from "./category-card";
 import type { Category } from "@/types";
-import { Megaphone, Palette, Briefcase, ListChecks, Brain, Sparkles, TrendingUp, CalendarClock, HeartHandshake, Wand2, FileText, BarChartBig } from "lucide-react"; // Added more icons for mapping
+import { Briefcase, Palette, TrendingUp, ListChecks, Brain, Sparkles, Megaphone } from "lucide-react";
 
-// Data provided by user
+// In a real app, this data would be fetched from Firestore.
+// For now, using the provided JSON data directly.
 const rawCategoriesData = [
   {
     "id": "marketing",
@@ -49,12 +50,12 @@ const rawCategoriesData = [
 // Helper function to map emoji or ID to Lucide Icon
 const getIconForCategory = (categoryId: string, iconEmoji: string) => {
   switch (categoryId) {
-    case "marketing": return Briefcase; // Was Megaphone, Briefcase fits 💼 better
-    case "content": return Palette; // Palette fits ✍️
-    case "business": return TrendingUp; // TrendingUp fits 📊
-    case "daily": return ListChecks; // ListChecks fits 📆
-    case "psychology": return Brain; // Brain fits 🧠
-    case "mystic": return Sparkles; // Sparkles fits 🔮
+    case "marketing": return Briefcase;
+    case "content": return Palette; 
+    case "business": return TrendingUp;
+    case "daily": return ListChecks; 
+    case "psychology": return Brain; 
+    case "mystic": return Sparkles; 
     default: return Megaphone; // Fallback icon
   }
 };
@@ -64,7 +65,6 @@ const categoriesData: Category[] = rawCategoriesData.map(category => ({
   Icon: getIconForCategory(category.id, category.iconEmoji),
 }));
 
-// In a real app, categoriesData would be fetched from Firestore.
 
 export function CategoryCardsSection() {
   return (

@@ -4,7 +4,7 @@
 import { Container } from "./container";
 import { PromptCard } from "./prompt-card";
 import type { Prompt } from "@/types";
-import { Star } from "lucide-react"; // For section title icon
+import { Star } from "lucide-react";
 
 // In a real app, this data would be fetched from Firestore.
 // Using user-provided data
@@ -14,9 +14,14 @@ const rawPromptsData: Prompt[] = [
   { "id": "pb1", "title": "Business Growth Plan", "prompt": "Outline a 3-month growth strategy for a SaaS startup with under $10k MRR.", "category": "business", "tools": ["ChatGPT", "Claude", "Grok"], "isFeatured": true },
   { "id": "pps1", "title": "Self-Reflection Prompt", "prompt": "Guide me through a deep self-reflection exercise on fear of failure.", "category": "psychology", "tools": ["Claude", "ChatGPT"], "isFeatured": true },
   { "id": "pmys2", "title": "Numerology Report", "prompt": "Create a personal numerology report based on my full birth name and date of birth.", "category": "mystic", "tools": ["Claude"], "isFeatured": true },
-  // Add other non-featured prompts here if needed for other parts, or keep data sources separate
+  // Non-featured prompts are included in rawPromptsData but filtered out below.
   { "id": "pm2", "title": "Ad Copy Generator", "prompt": "Write 3 variations of ad copy for Instagram promoting a skincare product line.", "category": "marketing", "tools": ["ChatGPT"], "isFeatured": false },
   { "id": "pc2", "title": "30-Day Content Plan", "prompt": "Generate a 30-day content calendar for a lifestyle influencer on Instagram.", "category": "content", "tools": ["Claude", "Grok"], "isFeatured": false },
+  { "id": "pb2", "title": "Automation Audit", "prompt": "Identify and list 5 business processes that could be automated in a solopreneur business.", "category": "business", "tools": ["ChatGPT"], "isFeatured": false },
+  { "id": "pd1", "title": "Morning Routine Optimizer", "prompt": "Design a 30-minute productivity-focused morning routine for a remote worker.", "category": "daily", "tools": ["Claude"], "isFeatured": false },
+  { "id": "pd2", "title": "Time Blocking Assistant", "prompt": "Help me organize my week into 3-hour work blocks using time blocking.", "category": "daily", "tools": ["Grok", "ChatGPT"], "isFeatured": false },
+  { "id": "pps2", "title": "Overthinking Relief", "prompt": "Give me 5 journal prompts to help reduce overthinking before sleep.", "category": "psychology", "tools": ["ChatGPT"], "isFeatured": false },
+  { "id": "pmys1", "title": "Daily Tarot Spread", "prompt": "Generate a 3-card daily tarot reading with interpretation and advice.", "category": "mystic", "tools": ["ChatGPT", "Grok"], "isFeatured": false }
 ];
 
 
@@ -24,7 +29,7 @@ const featuredPrompts: Prompt[] = rawPromptsData.filter(prompt => prompt.isFeatu
 
 export function FeaturedPromptsSection() {
   if (featuredPrompts.length === 0) {
-    return null; // Don't render section if no featured prompts
+    return null; 
   }
 
   return (
