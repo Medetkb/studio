@@ -23,7 +23,7 @@ export function HeroSection() {
             style={{animationDelay: '200ms'}}
             asChild
           >
-            <Link href="/promo">
+            <Link href="/auth">
               Start Now <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>

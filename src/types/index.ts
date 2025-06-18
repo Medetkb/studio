@@ -45,7 +45,7 @@ export interface NavItem {
 export type CourseLevel = "Beginner" | "Intermediate" | "Advanced" | "Master";
 
 export interface Course {
-  id: string;
+  id:string;
   title: string;
   imageUrl: string;
   imageHint?: string; // For AI image search hint
@@ -96,3 +96,25 @@ export const PaymentFormSchema = z.object({
 });
 
 export type PaymentFormData = z.infer<typeof PaymentFormSchema>;
+
+// Auth Schemas
+export const LoginSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  password: z.string().min(1, { message: "Password is required." }),
+});
+export type LoginFormData = z.infer<typeof LoginSchema>;
+
+export const SignUpSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  password: z.string().min(6, { message: "Password must be at least 6 characters." }),
+  confirmPassword: z.string().min(6, { message: "Password must be at least 6 characters." }),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords do not match.",
+  path: ["confirmPassword"], // Path to the field where the error message will be shown
+});
+export type SignUpFormData = z.infer<typeof SignUpSchema>;
+
+export const PasswordResetSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address." }),
+});
+export type PasswordResetFormData = z.infer<typeof PasswordResetSchema>;
