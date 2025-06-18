@@ -17,9 +17,9 @@ export const metadata: Metadata = {
     description: 'Supercharge your AI interactions with a vast library of curated prompts. Save time and get better results.',
     images: [
       {
-        url: '/promptly-dashboard-preview.png', // Updated OG image
-        width: 1200, // Standard OG width
-        height: 630, // Standard OG height
+        url: '/promptly-dashboard-preview.png', // Keep OG image local for reliability
+        width: 1200, 
+        height: 630, 
         alt: 'Promptly AI Prompt Library Preview',
       },
     ],
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Promptly - Powerful AI Prompts | Free & Premium Collections',
     description: 'Discover curated AI prompts to boost your productivity. Works with ChatGPT, Claude, and more!',
-    images: ['/promptly-dashboard-preview.png'], // Updated Twitter image
+    images: ['/promptly-dashboard-preview.png'], // Keep Twitter image local
   },
 };
 
@@ -89,11 +89,12 @@ export default function PromoTurnedHomePage() { // Renamed function for clarity
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">See Promptly in Action</h2>
             <div className="shadow-2xl rounded-lg overflow-hidden border border-border">
               <Image
-                src="/promptly-dashboard-preview.png" 
-                alt="Promptly interface preview" 
+                src="https://videos.openai.com/vg-assets/assets%2Ftask_01jy2nvqmsfyjshq281wts2nm7%2F1750289282_img_0.webp?st=2025-06-18T22%3A03%3A42Z&se=2025-06-24T23%3A03%3A42Z&sks=b&skt=2025-06-18T22%3A03%3A42Z&ske=2025-06-24T23%3A03%3A42Z&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skoid=aa5ddad1-c91a-4f0a-9aca-e20682cc8969&skv=2019-02-02&sv=2018-11-09&sr=b&sp=r&spr=https%2Chttp&sig=FADabsjPSrjoJIXb%2F9u8IzSZQNNOMideh%2BYnbcKXoTo%3D&az=oaivgprodscus" 
+                alt="Promptly UI Preview" 
                 width={1000}
                 height={600}
                 className="w-full h-auto"
+                priority // Consider adding priority if this is above the fold
               />
             </div>
           </Container>
