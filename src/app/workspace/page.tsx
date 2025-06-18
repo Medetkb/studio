@@ -33,12 +33,14 @@ const initialPromptsData: Prompt[] = [
   { id: "pd1", title: "Morning Focus Routine", prompt: "Design a 30-minute morning routine to maximize focus for a software developer.", category: "daily", tools: ["ChatGPT"], isFeatured: false, author: "Jane Doe"},
 ];
 
+const ALL_CATEGORIES_VALUE = "_all_"; // Define a distinct value for "All Categories"
+
 export default function WorkspacePage() {
   const { toast } = useToast();
   const [prompts, setPrompts] = useState<Prompt[]>(initialPromptsData);
   const [categories, setCategories] = useState<AppCategory[]>(initialCategoriesData);
   const [searchTerm, setSearchTerm] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState<string>('');
+  const [categoryFilter, setCategoryFilter] = useState<string>(ALL_CATEGORIES_VALUE); // Initialize with the distinct value
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPrompt, setEditingPrompt] = useState<PromptFormData | null>(null);
   const [promptToDelete, setPromptToDelete] = useState<Prompt | null>(null);
@@ -56,7 +58,8 @@ export default function WorkspacePage() {
     return prompts.filter(prompt => {
       const matchesSearch = prompt.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                             prompt.prompt.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = categoryFilter ? prompt.category === categoryFilter : true;
+      // Updated category filter logic
+      const matchesCategory = categoryFilter === ALL_CATEGORIES_VALUE ? true : prompt.category === categoryFilter;
       return matchesSearch && matchesCategory;
     });
   }, [prompts, searchTerm, categoryFilter]);
@@ -163,10 +166,10 @@ export default function WorkspacePage() {
             <Select value={categoryFilter} onValueChange={setCategoryFilter}>
               <SelectTrigger className="w-full md:w-[200px] bg-input border-border focus:border-primary">
                 <Filter className="mr-2 h-4 w-4 text-muted-foreground" />
-                <SelectValue placeholder="All Categories" />
+                <SelectValue placeholder="Filter by category" /> 
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Categories</SelectItem>
+                <SelectItem value={ALL_CATEGORIES_VALUE}>All Categories</SelectItem> 
                 {categories.map(category => (
                   <SelectItem key={category.id} value={category.id}>
                     {category.name}
@@ -284,5 +287,3 @@ export default function WorkspacePage() {
     </div>
   );
 }
-
-    
