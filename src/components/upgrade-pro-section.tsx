@@ -1,5 +1,7 @@
+
 "use client";
 
+import Link from 'next/link'; // Import Link
 import { Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -26,9 +28,9 @@ export function UpgradeProSection() {
               size="lg"
               className="bg-white text-primary hover:bg-white/90 dark:bg-primary-foreground dark:text-primary dark:hover:bg-primary-foreground/90 font-semibold text-lg px-8 py-3 shadow-md transition-transform hover:scale-105"
               aria-label="Upgrade to PRO"
-              onClick={() => { alert("Upgrade to PRO clicked!"); }}
+              asChild // Use asChild to make Button act like a Link
             >
-              Upgrade Now
+              <Link href="/pricing">Upgrade Now</Link>
             </Button>
           </CardContent>
         </Card>

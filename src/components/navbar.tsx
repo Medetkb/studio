@@ -5,7 +5,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, Search, LayoutDashboard, User, MessageSquare, Zap, LayoutGrid } from "lucide-react"; // Added LayoutGrid
+import { Menu, Search, LayoutDashboard, User, MessageSquare, Zap, LayoutGrid } from "lucide-react";
 import { Container } from "./container";
 import type { NavItem } from "@/types";
 import { cn } from "@/lib/utils";
@@ -14,10 +14,10 @@ import { ThemeToggleButton } from "./theme-toggle-button";
 
 const navItems: NavItem[] = [
   { href: "#curated-collections-search-section", label: "Search", icon: Search, isPageLink: false },
-  { href: "/courses", label: "Courses", icon: LayoutGrid, isPageLink: true }, // Changed from Categories to Courses
+  { href: "/courses", label: "Courses", icon: LayoutGrid, isPageLink: true },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, isPageLink: true },
-  { href: "#upgrade-pro-section", label: "Upgrade to PRO", icon: Zap, isCTA: true, isPageLink: false },
-  { href: "/profile", label: "Profile", icon: User, isPageLink: true }, // Ensure this links to /profile
+  { href: "/pricing", label: "Upgrade to PRO", icon: Zap, isCTA: true, isPageLink: true }, // Updated to link to /pricing
+  { href: "/profile", label: "Profile", icon: User, isPageLink: true },
   { href: "#feedback", label: "Feedback", icon: MessageSquare, isPageLink: false },
 ];
 
@@ -34,9 +34,8 @@ export function Navbar() {
 
         <nav className="hidden md:flex items-center space-x-6 text-sm font-medium flex-grow">
           {navItems.map((item) => {
-            // Skip CTA, Profile, and Feedback for text links here; they are handled as buttons/icons
-            if (item.isCTA || item.label === "Profile" || item.label === "Feedback") return null; 
-            
+            if (item.isCTA || item.label === "Profile" || item.label === "Feedback") return null;
+
             const LinkComponent = item.isPageLink ? Link : 'a';
             return (
               <LinkComponent
@@ -66,7 +65,6 @@ export function Navbar() {
                 </Link>
               </Button>
           )}
-          {/* Profile and Feedback Icon Buttons */}
           {navItems.filter(item => !item.isCTA && (item.label === "Profile" || item.label === "Feedback")).map(item => {
             const LinkComponent = item.isPageLink ? Link : 'a';
             return (
@@ -102,8 +100,6 @@ export function Navbar() {
                       key={item.label}
                       href={item.href}
                       onClick={() => {
-                        // For same-page anchor links, smooth scroll might need manual handling or specific library if not default browser behavior
-                        // For page links, Next.js handles navigation
                         setIsMobileMenuOpen(false);
                       }}
                       className={cn(
@@ -124,5 +120,3 @@ export function Navbar() {
     </header>
   );
 }
-
-    
