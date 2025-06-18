@@ -16,14 +16,15 @@ let app: FirebaseApp | undefined;
 let db: Firestore | null = null;
 let auth: Auth | null = null;
 
-const essentialKeysValid = firebaseConfig.apiKey && firebaseConfig.projectId;
-
+// Check for essential Firebase config variables
 if (!firebaseConfig.apiKey) {
   console.error("CRITICAL Firebase Config Error: NEXT_PUBLIC_FIREBASE_API_KEY is missing or empty. Please check your .env.local file. Firebase services will likely fail.");
 }
 if (!firebaseConfig.projectId) {
   console.error("CRITICAL Firebase Config Error: NEXT_PUBLIC_FIREBASE_PROJECT_ID is missing or empty. Please check your .env.local file. Firebase services will likely fail.");
 }
+
+const essentialKeysValid = firebaseConfig.apiKey && firebaseConfig.projectId;
 
 if (!getApps().length) {
   if (essentialKeysValid) {
@@ -49,13 +50,18 @@ if (!getApps().length) {
 if (app) {
   try {
     db = getFirestore(app);
-    auth = getAuth(app); // This is where an (auth/invalid-api-key) error would surface if `app` initialized but with a bad key.
+    auth = getAuth(app); 
   } catch (error) {
     console.error("Firebase Error: Failed to initialize Firestore/Auth services with the app instance. This often points to an invalid API key, incorrect project permissions, or services not enabled in Firebase console.", error);
     db = null;
     auth = null;
-    // Consider if app should be set to undefined here if core services fail,
-    // but typically Firebase allows app init and fails at service level.
+    // If core services fail, it might be an indication that 'app' although initialized, is not functional due to bad config.
+    // Depending on the error, you might consider setting 'app = undefined' here too.
+    // For instance, an 'auth/invalid-api-key' error at getAuth(app) means the app object is fundamentally non-functional for auth.
+    if ((error as any).code === 'auth/invalid-api-key' || (error as any).code === 'auth/invalid-project-id') {
+        console.warn("Firebase Warning: Detected invalid API key or Project ID during service initialization. Firebase app instance might be unusable.");
+        // app = undefined; // Optionally mark app as unusable
+    }
   }
 } else {
   console.warn("Firebase Warning: Firebase app object is not available or failed to initialize. Firestore and Auth services will be offline. Ensure .env.local is correctly configured and Firebase project is set up.");
