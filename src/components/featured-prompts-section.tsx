@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Container } from "./container";
@@ -12,6 +13,14 @@ const rawPromptsData: Prompt[] = [
   { "id": "pb1", "title": "Business Growth Plan", "prompt": "Outline a 3-month growth strategy for a SaaS startup with under $10k MRR.", "category": "business", "tools": ["ChatGPT", "Claude", "Grok"], "isFeatured": true },
   { "id": "pps1", "title": "Self-Reflection Prompt", "prompt": "Guide me through a deep self-reflection exercise on fear of failure.", "category": "psychology", "tools": ["Claude", "ChatGPT"], "isFeatured": true },
   { "id": "pmys2", "title": "Numerology Report", "prompt": "Create a personal numerology report based on my full birth name and date of birth.", "category": "mystic", "tools": ["Claude"], "isFeatured": true },
+  { 
+    "id": "pmys3", 
+    "title": "Spirit Guide Connection", 
+    "prompt": "Describe a guided meditation to help someone connect with their spirit guide or animal.", 
+    "category": "mystic", 
+    "tools": ["ChatGPT", "Claude"], 
+    "isFeatured": true 
+  },
   // Non-featured prompts are included in rawPromptsData but filtered out below.
   { "id": "pm2", "title": "Ad Copy Generator", "prompt": "Write 3 variations of ad copy for Instagram promoting a skincare product line.", "category": "marketing", "tools": ["ChatGPT"], "isFeatured": false },
   { "id": "pc2", "title": "30-Day Content Plan", "prompt": "Generate a 30-day content calendar for a lifestyle influencer on Instagram.", "category": "content", "tools": ["Claude", "Grok"], "isFeatured": false },
@@ -55,3 +64,4 @@ export function FeaturedPromptsSection() {
     </section>
   );
 }
+
