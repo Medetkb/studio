@@ -3,7 +3,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Navbar } from "@/components/navbar";
+// Navbar import removed
 import { Container } from "@/components/container";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -64,7 +64,7 @@ const benefits = [
 export default function PromoPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <Navbar />
+      {/* Navbar instance removed */}
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="py-16 md:py-24 bg-gradient-to-br from-background to-muted/30 dark:from-background dark:to-muted/10 animate-fadeIn opacity-0">
@@ -187,5 +187,3 @@ export default function PromoPage() {
     </div>
   );
 }
-
-    
