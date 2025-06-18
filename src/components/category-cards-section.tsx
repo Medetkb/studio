@@ -3,46 +3,68 @@
 
 import { Container } from "./container";
 import { CategoryCard } from "./category-card";
-import type { CategoryInfo } from "@/types";
-import { Megaphone, Palette, Briefcase, ListChecks, Brain } from "lucide-react";
+import type { Category } from "@/types";
+import { Megaphone, Palette, Briefcase, ListChecks, Brain, Sparkles, TrendingUp, CalendarClock, HeartHandshake, Wand2, FileText, BarChartBig } from "lucide-react"; // Added more icons for mapping
 
-const categoriesData: CategoryInfo[] = [
+// Data provided by user
+const rawCategoriesData = [
   {
-    id: "marketing-sales",
-    title: "Marketing & Sales",
-    description: "Target audience analysis, funnel creation, keyword selection, and conversion improvement.",
-    Icon: Megaphone,
-    href: "#marketing-sales",
+    "id": "marketing",
+    "name": "Marketing & Sales",
+    "description": "Target audience analysis, funnel creation, keyword research, sales strategy prompts.",
+    "iconEmoji": "💼"
   },
   {
-    id: "content-creativity",
-    title: "Content & Creativity",
-    description: "Generate ideas, post scripts, video concepts, and content planning prompts.",
-    Icon: Palette,
-    href: "#content-creativity",
+    "id": "content",
+    "name": "Content & Creativity",
+    "description": "Generate content ideas, scripts, outlines, and formats for social media, blogs, and YouTube.",
+    "iconEmoji": "✍️"
   },
   {
-    id: "business-growth",
-    title: "Business & Growth",
-    description: "Planning, systematization, automation, finance, and team management.",
-    Icon: Briefcase,
-    href: "#business-growth",
+    "id": "business",
+    "name": "Business & Growth",
+    "description": "Prompts for planning, systemization, automation, finance, and team management.",
+    "iconEmoji": "📊"
   },
   {
-    id: "daily-productivity",
-    title: "Daily Productivity",
-    description: "Tasks, to-do lists, routines, and personal productivity prompts.",
-    Icon: ListChecks,
-    href: "#daily-productivity",
+    "id": "daily",
+    "name": "Daily Productivity",
+    "description": "Prompts to organize your day, build habits, manage tasks, and boost focus.",
+    "iconEmoji": "📆"
   },
   {
-    id: "psychology-self-help",
-    title: "Psychology & Self-help",
-    description: "Mental health, self-reflection, emotional support, and personal development prompts.",
-    Icon: Brain,
-    href: "#psychology-self-help",
+    "id": "psychology",
+    "name": "Psychology & Self-help",
+    "description": "Prompts for self-reflection, emotional intelligence, inner work, and mindset.",
+    "iconEmoji": "🧠"
   },
+  {
+    "id": "mystic",
+    "name": "Astrology, Tarot & Numerology",
+    "description": "Mystic-themed prompts for daily readings, birth charts, and spiritual guidance.",
+    "iconEmoji": "🔮"
+  }
 ];
+
+// Helper function to map emoji or ID to Lucide Icon
+const getIconForCategory = (categoryId: string, iconEmoji: string) => {
+  switch (categoryId) {
+    case "marketing": return Briefcase; // Was Megaphone, Briefcase fits 💼 better
+    case "content": return Palette; // Palette fits ✍️
+    case "business": return TrendingUp; // TrendingUp fits 📊
+    case "daily": return ListChecks; // ListChecks fits 📆
+    case "psychology": return Brain; // Brain fits 🧠
+    case "mystic": return Sparkles; // Sparkles fits 🔮
+    default: return Megaphone; // Fallback icon
+  }
+};
+
+const categoriesData: Category[] = rawCategoriesData.map(category => ({
+  ...category,
+  Icon: getIconForCategory(category.id, category.iconEmoji),
+}));
+
+// In a real app, categoriesData would be fetched from Firestore.
 
 export function CategoryCardsSection() {
   return (
